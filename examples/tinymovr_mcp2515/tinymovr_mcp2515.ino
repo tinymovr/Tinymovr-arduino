@@ -22,7 +22,7 @@ bool recv_cb(uint8_t *data, uint8_t *data_size)
   struct can_frame frame;
   if (mcp2515.readMessage(&frame) == MCP2515::ERROR_OK) 
   {
-    memcpy(data, &frame.data, frame.dlc * sizeof(uint8_t));
+    memcpy(data, &frame.data, frame.can_dlc * sizeof(uint8_t));
     return true;
   }
   return false;
@@ -36,7 +36,7 @@ void setup()
   mcp2515.setBitrate(CAN_1000KBPS, MCP_8MHZ);
   mcp2515.setNormalMode();
 
-  Tinymovr.init(&send_cb, &recv_cb);
+  tinymovr.init(&send_cb, &recv_cb);
 }
 
 // Request a CAN endpoint and print it via serial
@@ -51,8 +51,9 @@ void loop() {
   // the data fields depend on the endpoint retrieved
   // Check out:
   // https://tinymovr.readthedocs.io/en/latest/api/guide.html#api-reference
-  Tinymovr.device_info(&id, &fw_major, &fw_minor, &fw_patch, &temp);
-  Serial.printf("ID: %d\n", id);
+  tinymovr.device_info(&id, &fw_major, &fw_minor, &fw_patch, &temp);
+  Serial.print("ID: ");
+  Serial.print(id);
+  Serial.print("\n");
   delay(1000);
 }
-

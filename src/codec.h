@@ -1,7 +1,4 @@
 
-#include <cstdlib>
-#include <cstdint>
-
 template<typename T>
 inline size_t read_le(T* value, const uint8_t* buffer);
 
