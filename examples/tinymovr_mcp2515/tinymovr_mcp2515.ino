@@ -4,7 +4,6 @@
 #include <tinymovr.h>
 
 MCP2515 mcp2515(10);
-Tinymovr tinymovr;
 
 // The send_cb and recv_cb functions need to be implemented
 // according to the CAN bus hardware you use. Below an example
@@ -17,7 +16,7 @@ void send_cb(uint32_t arbitration_id, uint8_t *data, uint8_t data_size)
   mcp2515.sendMessage(&frame);
 }
 
-bool recv_cb(uint8_t *data, uint8_t *data_size)
+bool recv_cb(uint32_t arbitration_id, uint8_t *data, uint8_t *data_size)
 {
   struct can_frame frame;
   if (mcp2515.readMessage(&frame) == MCP2515::ERROR_OK) 
@@ -28,6 +27,8 @@ bool recv_cb(uint8_t *data, uint8_t *data_size)
   return false;
 }
 
+Tinymovr tinymovr(1, &send_cb, &recv_cb);
+
 // Perform hardware initialization at setup()
 void setup()
 {
@@ -35,8 +36,6 @@ void setup()
   mcp2515.reset();
   mcp2515.setBitrate(CAN_1000KBPS, MCP_8MHZ);
   mcp2515.setNormalMode();
-
-  tinymovr.init(&send_cb, &recv_cb);
 }
 
 // Request a CAN endpoint and print it via serial
