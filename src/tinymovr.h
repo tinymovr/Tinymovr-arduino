@@ -3,7 +3,7 @@
 
 #include <Arduino.h>
 
-typedef void (*send_callback)(uint32_t arbitration_id, uint8_t *data, uint8_t dlc);
+typedef void (*send_callback)(uint32_t arbitration_id, uint8_t *data, uint8_t dlc, bool rtr);
 typedef bool (*recv_callback)(uint32_t *arbitration_id, uint8_t *data, uint8_t *dlc);
 
 class Tinymovr

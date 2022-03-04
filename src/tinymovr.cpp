@@ -16,10 +16,10 @@ void Tinymovr::init(send_callback send_cb, recv_callback recv_cb)
 void Tinymovr::device_info(uint32_t *device_id, uint8_t *fw_major,
     uint8_t *fw_minor, uint8_t *fw_patch, uint8_t *temp
 ) {
-    uint32_t can_id = (node_id << ep_bits) | device_info_ep_id | CAN_RTR_FLAG;
+    uint32_t can_id = (node_id << ep_bits) | device_info_ep_id;
     uint8_t dlc = 0;
 
-    this->_send_cb(can_id, this->_data, dlc);
+    this->_send_cb(can_id, this->_data, dlc, true);
     if (this->_recv_cb(&can_id, this->_data, &dlc)) 
     {
         read_le(device_id, this->_data);
