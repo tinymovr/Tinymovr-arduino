@@ -8,12 +8,16 @@ uint8_t ep_bits = 6;
 uint8_t get_device_info_ep_id = 3;
 uint8_t get_state_ep_id = 4;
 uint8_t get_encoder_estimates_ep_id = 5;
+uint8_t get_Iq_meas_set_ep_id = 6;
+uint8_t get_pos_setpoint_ep_id = 7;
+uint8_t get_vel_setpoint_ep_id = 8;
+uint8_t get_Iq_setpoint_ep_id =9;
 
 void Tinymovr::device_info(uint32_t *device_id, uint8_t *fw_major,
     uint8_t *fw_minor, uint8_t *fw_patch, uint8_t *temp
 ) {
     this->send_cb(get_device_info_ep_id, this->_data, 0, true);
-    if (this->recv_cb(get_device_info_ep_id, this->_data, &dlc)) 
+    if (this->recv_cb(get_device_info_ep_id, this->_data, this->_dlc)) 
     {
         read_le(device_id, this->_data);
         read_le(fw_major, this->_data + 4);
@@ -59,29 +63,32 @@ void Tinymovr::current_control()
 void Tinymovr::get_state(uint8_t *state)
 {
     this->send_cb(get_state_ep_id, this->_data, 0, true);
-    if (this->recv_cb(get_state_ep_id, this->_data, &dlc)) 
+    const uint8_t *data = this->_data;
+    if (this->recv_cb(get_state_ep_id, data, this->_dlc)) 
     {
-        read_le(state, this->_data);
+        read_le(state, data);
     }
 }
 
 void Tinymovr::get_encoder_estimates(float *pos_estimate, float *vel_estimate)
 {
     this->send_cb(get_encoder_estimates_ep_id, this->_data, 0, true);
-    if (this->recv_cb(get_encoder_estimates_ep_id, this->_data, &dlc)) 
+    const uint8_t *data = this->_data;
+    if (this->recv_cb(get_encoder_estimates_ep_id, data, this->_dlc)) 
     {
-        read_le(pos_estimate, this->_data);
-        read_le(vel_estimate, this->_data + 4);
+        read_le(pos_estimate, data);
+        read_le(vel_estimate, data + 4);
     }
 }
 
-void Tinymovr::get_Iq_Id_meas(float *Iq_meas, float *Id_meas)
+void Tinymovr::get_Iq_meas_set(float *Iq_meas, float *Iq_set)
 {
-    this->send_cb(get_Iq_Id_meas_ep_id, this->_data, 0, true);
-    if (this->recv_cb(get_Iq_Id_meas_ep_id, this->_data, &dlc)) 
+    this->send_cb(get_Iq_meas_set_ep_id, this->_data, 0, true);
+    const uint8_t *data = this->_data;
+    if (this->recv_cb(get_Iq_meas_set_ep_id, data, this->_dlc)) 
     {
-        read_le(Iq_meas, this->_data);
-        read_le(Id_meas, this->_data + 4);
+        read_le(Iq_meas, data);
+        read_le(Iq_set, data + 4);
     }
 }
 
@@ -89,39 +96,42 @@ void Tinymovr::get_pos_setpoint(float *pos_setpoint, float *vel_ff, float *Iq_ff
 {
     int16_t vel_ff_;
     int8_t Iq_ff_;
-    this->send_cb(get_vel_setpoint_ep_id, this->_data, 0, true);
-    if (this->recv_cb(get_vel_setpoint_ep_id, this->_data, &dlc)) 
+    this->send_cb(get_pos_setpoint_ep_id, this->_data, 0, true);
+    const uint8_t *data = this->_data;
+    if (this->recv_cb(get_pos_setpoint_ep_id, data, this->_dlc)) 
     {
-        read_le(pos_setpoint, this->_data);
-        read_le(vel_ff_, this->_data + 4);
-        read_le(Iq_ff_, this->_data + 4);
-        *vel_ff = (float)(vel_ff_ * scale);
-        *Iq_ff = (float)(Iq_ff_ * scale);
+        read_le(pos_setpoint, data);
+        read_le(&vel_ff_, data + 4);
+        read_le(&Iq_ff_, data + 4);
+        *vel_ff = (float)(vel_ff_ * VEL_INT16_TO_FLOAT_FACTOR);
+        *Iq_ff = (float)(Iq_ff_ * IQ_INT8_TO_FLOAT_FACTOR);
     }
 }
 
 void Tinymovr::get_vel_setpoint(float *vel_setpoint, float *Iq_ff)
 {
     this->send_cb(get_vel_setpoint_ep_id, this->_data, 0, true);
-    if (this->recv_cb(get_vel_setpoint_ep_id, this->_data, &dlc)) 
+    const uint8_t *data = this->_data;
+    if (this->recv_cb(get_vel_setpoint_ep_id, data, this->_dlc)) 
     {
-        read_le(vel_setpoint, this->_data);
-        read_le(Iq_ff, this->_data + 4);
+        read_le(vel_setpoint, data);
+        read_le(Iq_ff, data + 4);
     }
 }
 
 void Tinymovr::get_Iq_setpoint(float *Iq_setpoint)
 {
     this->send_cb(get_Iq_setpoint_ep_id, this->_data, 0, true);
-    if (this->recv_cb(get_Iq_setpoint_ep_id, this->_data, &dlc)) 
+    const uint8_t *data = this->_data;
+    if (this->recv_cb(get_Iq_setpoint_ep_id, data, this->_dlc)) 
     {
-        read_le(Iq_setpoint, this->_data);
+        read_le(Iq_setpoint, data);
     }
 }
 
 void Tinymovr::set_state(uint8_t state)
 {
-    
+    this->send_cb(get_Iq_setpoint_ep_id, this->_data, 0, true);
 }
 
 void Tinymovr::set_pos_setpoint(float pos_setpoint, float vel_ff, float Iq_cc)
