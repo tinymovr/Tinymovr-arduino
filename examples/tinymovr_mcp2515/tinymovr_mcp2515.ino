@@ -3,11 +3,26 @@
 #include <mcp2515.h>
 #include <tinymovr.h>
 
+// The hardware interface, in this case
+// the MCP2515 chip
 MCP2515 mcp2515(10);
 
+// ---------------------------------------------------------------
+// CALLBACKS
 // The send_cb and recv_cb functions need to be implemented
 // according to the CAN bus hardware you use. Below an example
 // usable with MCP2515 type breakouts
+
+/*
+ * Function:  send_cb 
+ * --------------------
+ *  is called to send a CAN frame
+ *
+ *  arbitration_id: the frame arbitration id
+ *  data: pointer to the data array to be transmitted
+ *  data_size: the size of transmitted data
+ *  rtr: if the ftame is of request transmit type (RTR)
+ */
 void send_cb(uint32_t arbitration_id, uint8_t *data, uint8_t data_size, bool rtr)
 {
   struct can_frame frame;
@@ -25,6 +40,15 @@ void send_cb(uint32_t arbitration_id, uint8_t *data, uint8_t data_size, bool rtr
   mcp2515.sendMessage(&frame);
 }
 
+/*
+ * Function:  recv_cb 
+ * --------------------
+ *  is called to receive a CAN frame
+ *
+ *  arbitration_id: the frame arbitration id
+ *  data: pointer to the data array to be received
+ *  data_size: pointer to the variable that will hold the size of received data
+ */
 bool recv_cb(uint32_t arbitration_id, uint8_t *data, uint8_t *data_size)
 {
   struct can_frame frame;
@@ -35,10 +59,16 @@ bool recv_cb(uint32_t arbitration_id, uint8_t *data, uint8_t *data_size)
   }
   return false;
 }
+// ---------------------------------------------------------------
 
+// The Tinymovr object
 Tinymovr tinymovr(1, &send_cb, &recv_cb);
 
-// Perform hardware initialization at setup()
+/*
+ * Function:  setup 
+ * --------------------
+ *  perform hardware initialization
+ */
 void setup()
 {
   Serial.begin(115200);
@@ -47,8 +77,13 @@ void setup()
   mcp2515.setNormalMode();
 }
 
-// Request a CAN endpoint and print it via serial
-// Repeat every second
+/*
+ * Function:  loop 
+ * --------------------
+ *  Request board information and print via serial
+ *  also look for commands coming from serial and
+ *  transmit to Tinymovr. Repeat every second.
+ */
 void loop() {
   
   uint32_t id;
@@ -58,9 +93,7 @@ void loop() {
   uint8_t temp;
   uint8_t state;
   uint8_t mode;
-  // frame contains received message
-  // the data fields depend on the endpoint retrieved
-  // Check out:
+  // For endpoint reference check out:
   // https://tinymovr.readthedocs.io/en/latest/api/guide.html#api-reference
   tinymovr.device_info(&id, &fw_major, &fw_minor, &fw_patch, &temp);
   tinymovr.get_state(&state, &mode);
@@ -98,11 +131,17 @@ void loop() {
   Serial.print(Iq_setp);
   Serial.print("\n");
   Serial.println("---");
-  handleSerial();
+  handle_serial();
   delay(1000);
 }
 
-void handleSerial()
+/*
+ * Function:  handle_serial 
+ * --------------------
+ *  listen for commands via serial and accordingly
+ *  send commands to Tinymovr
+ */
+void handle_serial()
 {
   if (Serial.available() > 0) {
     uint8_t receivedChar = Serial.read();
