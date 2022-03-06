@@ -34,4 +34,5 @@ MIT
 ## References
 
 [Official Website](https://tinymovr.com)
+
 [Documentation](https://tinymovr.readthedocs.io)
