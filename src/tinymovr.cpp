@@ -104,7 +104,7 @@ void Tinymovr::get_pos_setpoint(float *pos_setpoint, float *vel_ff, float *Iq_ff
         read_le(&vel_ff_, this->_data + 4);
         read_le(&Iq_ff_, this->_data + 4);
         *vel_ff = (float)(vel_ff_ * VEL_INT16_TO_FLOAT_FACTOR);
-        *Iq_ff = (float)(Iq_ff_ * IQ_INT8_TO_FLOAT_FACTOR);
+        *Iq_ff = (float)(Iq_ff_ * IQ_INT16_TO_FLOAT_FACTOR);
     }
 }
 
@@ -139,7 +139,7 @@ void Tinymovr::set_pos_setpoint(float pos_setpoint, float vel_ff, float Iq_cc)
 {
     write_le(pos_setpoint, this->_data);
     write_le((int16_t)(vel_ff * VEL_FLOAT_TO_INT16_FACTOR), this->_data + 4);
-    write_le((int8_t)(Iq_cc * IQ_FLOAT_TO_INT8_FACTOR), this->_data + 6);
+    write_le((int16_t)(Iq_cc * IQ_FLOAT_TO_INT16_FACTOR), this->_data + 6);
     this->send(set_pos_setpoint_ep_id, this->_data, 8, false);
 }
 

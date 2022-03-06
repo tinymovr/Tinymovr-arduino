@@ -5,8 +5,8 @@
 
 #define VEL_FLOAT_TO_INT16_FACTOR (0.1f)
 #define VEL_INT16_TO_FLOAT_FACTOR (1.0f/VEL_FLOAT_TO_INT16_FACTOR)
-#define IQ_FLOAT_TO_INT8_FACTOR (100.0f)
-#define IQ_INT8_TO_FLOAT_FACTOR (1.0f/IQ_FLOAT_TO_INT8_FACTOR)
+#define IQ_FLOAT_TO_INT16_FACTOR (100.0f)
+#define IQ_INT16_TO_FLOAT_FACTOR (1.0f/IQ_FLOAT_TO_INT16_FACTOR)
 
 
 typedef void (*send_callback)(uint32_t arbitration_id, uint8_t *data, uint8_t dlc, bool rtr);
