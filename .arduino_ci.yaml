@@ -1,0 +1,4 @@
+only_boards:
+  - arduino:avr:uno
+library_archives:
+  - autowp-mcp2515=https://github.com/autowp/arduino-mcp2515/archive/refs/heads/master.zip
