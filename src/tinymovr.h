@@ -57,6 +57,6 @@ class Tinymovr
     uint8_t _dlc;
 
     void send(uint8_t cmd_id, uint8_t *data, uint8_t data_size, bool rtr);
-    bool recv(uint32_t arbitration_id, uint8_t *data, uint8_t *data_size, uint16_t delay_us);
+    bool recv(uint8_t cmd_id, uint8_t *data, uint8_t *data_size, uint16_t delay_us);
     uint8_t get_arbitration_id(uint8_t cmd_id);
 };
