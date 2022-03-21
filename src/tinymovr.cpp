@@ -8,10 +8,9 @@ const uint8_t ep_bits = 6;
 uint8_t get_device_info_ep_id = 0x01A;
 uint8_t get_state_ep_id = 0x003;
 uint8_t get_encoder_estimates_ep_id = 0x009;
-uint8_t get_Iq_meas_set_ep_id = 0x014;
+uint8_t get_Iq_set_est_ep_id = 0x014;
 uint8_t get_pos_setpoint_ep_id = 0x00C;
 uint8_t get_vel_setpoint_ep_id = 0x00D;
-uint8_t get_Iq_setpoint_ep_id = 0x00E;
 
 uint8_t set_state_ep_id = 0x007;
 uint8_t set_pos_setpoint_ep_id = 0x00C;
@@ -83,13 +82,13 @@ void Tinymovr::get_encoder_estimates(float *pos_estimate, float *vel_estimate)
     }
 }
 
-void Tinymovr::get_Iq_meas_set(float *Iq_meas, float *Iq_set)
+void Tinymovr::get_Iq_setpoint_estimate(float *Iq_set, float *Iq_est)
 {
-    this->send(get_Iq_meas_set_ep_id, this->_data, 0, true);
-    if (this->recv(get_Iq_meas_set_ep_id, this->_data, &(this->_dlc), RECV_DELAY_US)) 
+    this->send(get_Iq_set_est_ep_id, this->_data, 0, true);
+    if (this->recv(get_Iq_set_est_ep_id, this->_data, &(this->_dlc), RECV_DELAY_US)) 
     {
         read_le(Iq_set, this->_data);
-        read_le(Iq_meas, this->_data + 4);
+        read_le(Iq_est, this->_data + 4);
     }
 }
 
@@ -115,16 +114,6 @@ void Tinymovr::get_vel_setpoint(float *vel_setpoint, float *Iq_ff)
     {
         read_le(vel_setpoint, this->_data);
         read_le(Iq_ff, this->_data + 4);
-    }
-}
-
-void Tinymovr::get_Iq_setpoint(float *Iq_setpoint)
-{
-    this->send(get_Iq_setpoint_ep_id, this->_data, 0, true);
-    const uint8_t *data = this->_data;
-    if (this->recv(get_Iq_setpoint_ep_id, this->_data, &(this->_dlc), RECV_DELAY_US)) 
-    {
-        read_le(Iq_setpoint, this->_data);
     }
 }
 
