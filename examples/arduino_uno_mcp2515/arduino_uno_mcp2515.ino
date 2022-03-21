@@ -180,7 +180,7 @@ void loop()
 
       float Iq_setpoint;
       float Iq_estimate;
-      tinymovr.get_Iq_set_est(&Iq_setpoint, &Iq_estimate);
+      tinymovr.get_Iq_setpoint_estimate(&Iq_setpoint, &Iq_estimate);
       Serial.print("Iq estimate: ");
       Serial.print(Iq_estimate);
       Serial.print(", Iq setpoint: ");
