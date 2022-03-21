@@ -1,6 +1,8 @@
 
 # Tinymovr-Arduino library
 
+![CI](https://github.com/tinymovr/tinymovr-arduino/actions/workflows/ci.yaml/badge.svg)
+
 This library is an easy interface for controlling Tinymovr through CAN Bus, using an Arduino and a CAN Adapter.
 
 Not all functionality is implemented yet but the library is being constantly updated.
