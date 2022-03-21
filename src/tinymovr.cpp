@@ -156,7 +156,7 @@ void Tinymovr::send(uint8_t cmd_id, uint8_t *data, uint8_t data_size, bool rtr)
     this->send_cb(arb_id, data, data_size, rtr);
 }
 
-bool Tinymovr::recv(uint32_t arbitration_id, uint8_t *data, uint8_t *data_size, uint16_t delay_us)
+bool Tinymovr::recv(uint8_t cmd_id, uint8_t *data, uint8_t *data_size, uint16_t delay_us)
 {
     // A delay of a few 100s of us needs to be inserted
     // to ensure the response has been transmitted.
@@ -165,7 +165,8 @@ bool Tinymovr::recv(uint32_t arbitration_id, uint8_t *data, uint8_t *data_size, 
     {
         delayMicroseconds(delay_us);
     }
-    return this->recv_cb(arbitration_id, data, data_size);
+    const uint8_t arb_id = this->get_arbitration_id(cmd_id);
+    return this->recv_cb(arb_id, data, data_size);
 }
 
 uint8_t Tinymovr::get_arbitration_id(uint8_t cmd_id)
