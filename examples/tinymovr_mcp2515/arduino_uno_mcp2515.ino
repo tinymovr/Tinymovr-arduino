@@ -178,13 +178,13 @@ void loop()
       Serial.print(vel_estimate);
       Serial.print("\n");
 
-      float Iq_meas;
-      float Iq_setp;
-      tinymovr.get_Iq_meas_set(&Iq_meas, &Iq_setp);
-      Serial.print("Iq measured: ");
-      Serial.print(Iq_meas);
+      float Iq_setpoint;
+      float Iq_estimate;
+      tinymovr.get_Iq_set_est(&Iq_setpoint, &Iq_estimate);
+      Serial.print("Iq estimate: ");
+      Serial.print(Iq_estimate);
       Serial.print(", Iq setpoint: ");
-      Serial.print(Iq_setp);
+      Serial.print(Iq_setpoint);
       Serial.print("\n");
       Serial.println("---");
     }
