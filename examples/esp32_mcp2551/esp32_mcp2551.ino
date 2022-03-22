@@ -52,7 +52,8 @@ void send_cb(uint32_t arbitration_id, uint8_t *data, uint8_t data_size, bool rtr
  */
 bool recv_cb(uint32_t arbitration_id, uint8_t *data, uint8_t *data_size)
 {
-  int packetSize = CAN.parsePacket();
+  (void)arbitration_id;
+  //int packetSize = CAN.parsePacket();
   int availableBytes = CAN.available();
   *data_size = availableBytes;
   if (availableBytes) {
