@@ -144,13 +144,13 @@ void loop()
     else if (receivedChar == 'I')
     {
       // Print board information
-      uint32_t id;
-      uint8_t fw_major;
-      uint8_t fw_minor;
-      uint8_t fw_patch;
-      uint8_t temp;
-      uint8_t state;
-      uint8_t mode;
+      uint32_t id = 0;
+      uint8_t fw_major = 0;
+      uint8_t fw_minor = 0;
+      uint8_t fw_patch = 0;
+      uint8_t temp = 0;
+      uint8_t state = 0;
+      uint8_t mode = 0;
       tinymovr.device_info(&id, &fw_major, &fw_minor, &fw_patch, &temp);
       tinymovr.get_state(&state, &mode);
       Serial.print("Device ID: ");
