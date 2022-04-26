@@ -8,6 +8,21 @@
 #define IQ_FLOAT_TO_INT16_FACTOR (100.0f)
 #define IQ_INT16_TO_FLOAT_FACTOR (1.0f/IQ_FLOAT_TO_INT16_FACTOR)
 
+typedef enum ControlState
+{
+    STATE_IDLE = 0,
+    STATE_CALIBRATE = 1,
+    STATE_CL_CONTROL = 2
+} ControlState;
+
+typedef enum ControlMode
+{
+    CTRL_CURRENT = 0,
+    CTRL_VELOCITY = 1,
+    CTRL_POSITION = 2,
+    CTRL_TRAJECTORY = 3
+} ControlMode;
+
 
 typedef void (*send_callback)(uint32_t arbitration_id, uint8_t *data, uint8_t dlc, bool rtr);
 typedef bool (*recv_callback)(uint32_t arbitration_id, uint8_t *data, uint8_t *dlc);
