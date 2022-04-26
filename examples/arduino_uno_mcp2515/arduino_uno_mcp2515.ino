@@ -107,17 +107,17 @@ void loop()
     if (receivedChar == 'Q')
     {
       Serial.println("Received Calibration command");
-      tinymovr.set_state(1, 0);
+      tinymovr.set_state(STATE_CALIBRATE, 0);
     }
     else if (receivedChar == 'A')
     {
       Serial.println("Received Closed Loop command");
-      tinymovr.set_state(2, 2);
+      tinymovr.set_state(STATE_CL_CONTROL, CTRL_POSITION);
     }
     else if (receivedChar == 'Z')
     {
       Serial.println("Received Idle command");
-      tinymovr.set_state(0, 0);
+      tinymovr.set_state(STATE_IDLE, CTRL_CURRENT);
     }
     else if (receivedChar == 'R')
     {
