@@ -17,6 +17,9 @@ uint8_t set_pos_setpoint_ep_id = 0x00C;
 uint8_t set_vel_setpoint_ep_id = 0x00D;
 uint8_t set_Iq_setpoint_ep_id = 0x00E;
 uint8_t reset_ep_id = 0x016;
+uint8_t move_to_pos_with_vel_limit_ep_id = 0x021;
+uint8_t set_max_plan_accel_decel_ep_id = 0x022;
+uint8_t get_max_plan_accel_decel_ep_id = 0x023;
 
 void Tinymovr::device_info(uint32_t *device_id, uint8_t *fw_major,
     uint8_t *fw_minor, uint8_t *fw_patch, uint8_t *temp
@@ -143,6 +146,30 @@ void Tinymovr::set_Iq_setpoint(float Iq_setpoint)
 {
     write_le(Iq_setpoint, this->_data);
     this->send(set_Iq_setpoint_ep_id, this->_data, 4, false);
+}
+
+void move_to_pos_with_vel_limit(float target_pos, float vel_limit)
+{
+    write_le(target_pos, this->_data);
+    write_le(vel_limit, this->_data + 4);
+    this->send(move_to_pos_with_vel_limit_ep_id, this->_data, 8, false);
+}
+
+void get_max_plan_accel_decel(float *accel, float *decel)
+{
+    this->send(get_max_plan_accel_decel_ep_id, this->_data, 0, true);
+    if (this->recv(get_max_plan_accel_decel_ep_id, this->_data, &(this->_dlc), RECV_DELAY_US)) 
+    {
+        read_le(accel, this->_data);
+        read_le(decel, this->_data + 4);
+    }
+}
+
+void set_max_plan_accel_decel(float accel, float decel)
+{
+    write_le(accel, this->_data);
+    write_le(decel, this->_data + 4);
+    this->send(set_max_plan_accel_decel_ep_id, this->_data, 8, false);
 }
 
 void Tinymovr::reset()

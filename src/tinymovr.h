@@ -60,6 +60,9 @@ class Tinymovr
     void set_pos_setpoint(float pos_setpoint, float vel_ff, float Iq_ff);
     void set_vel_setpoint(float vel_setpoint, float Iq_ff);
     void set_Iq_setpoint(float Iq_setpoint);
+    void move_to_pos_with_vel_limit(float target_pos, float vel_limit);
+    void get_max_plan_accel_decel(float *accel, float *decel);
+    void set_max_plan_accel_decel(float accel, float decel);
 
     void reset();
 
