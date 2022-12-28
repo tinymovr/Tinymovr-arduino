@@ -148,14 +148,14 @@ void Tinymovr::set_Iq_setpoint(float Iq_setpoint)
     this->send(set_Iq_setpoint_ep_id, this->_data, 4, false);
 }
 
-void move_to_pos_with_vel_limit(float target_pos, float vel_limit)
+void Tinymovr::move_to_pos_with_vel_limit(float target_pos, float vel_limit)
 {
     write_le(target_pos, this->_data);
     write_le(vel_limit, this->_data + 4);
     this->send(move_to_pos_with_vel_limit_ep_id, this->_data, 8, false);
 }
 
-void get_max_plan_accel_decel(float *accel, float *decel)
+void Tinymovr::get_max_plan_accel_decel(float *accel, float *decel)
 {
     this->send(get_max_plan_accel_decel_ep_id, this->_data, 0, true);
     if (this->recv(get_max_plan_accel_decel_ep_id, this->_data, &(this->_dlc), RECV_DELAY_US)) 
@@ -165,7 +165,7 @@ void get_max_plan_accel_decel(float *accel, float *decel)
     }
 }
 
-void set_max_plan_accel_decel(float accel, float decel)
+void Tinymovr::set_max_plan_accel_decel(float accel, float decel)
 {
     write_le(accel, this->_data);
     write_le(decel, this->_data + 4);
