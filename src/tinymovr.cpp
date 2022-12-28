@@ -16,6 +16,8 @@ uint8_t set_state_ep_id = 0x007;
 uint8_t set_pos_setpoint_ep_id = 0x00C;
 uint8_t set_vel_setpoint_ep_id = 0x00D;
 uint8_t set_Iq_setpoint_ep_id = 0x00E;
+uint8_t set_limits_ep_id = 0x00F;
+uint8_t get_limits_ep_id = 0x015;
 uint8_t reset_ep_id = 0x016;
 uint8_t move_to_pos_with_vel_limit_ep_id = 0x021;
 uint8_t set_max_plan_accel_decel_ep_id = 0x022;
@@ -146,6 +148,23 @@ void Tinymovr::set_Iq_setpoint(float Iq_setpoint)
 {
     write_le(Iq_setpoint, this->_data);
     this->send(set_Iq_setpoint_ep_id, this->_data, 4, false);
+}
+
+void Tinymovr::get_limits(float *vel_limit, float *Iq_limit)
+{
+    this->send(get_limits_ep_id, this->_data, 0, true);
+    if (this->recv(get_limits_ep_id, this->_data, &(this->_dlc), RECV_DELAY_US)) 
+    {
+        read_le(vel_limit, this->_data);
+        read_le(Iq_limit, this->_data + 4);
+    }
+}
+
+void Tinymovr::set_limits(float vel_limit, float Iq_limit)
+{
+    write_le(vel_limit, this->_data);
+    write_le(Iq_limit, this->_data + 4);
+    this->send(set_limits_ep_id, this->_data, 8, false);
 }
 
 void Tinymovr::move_to_pos_with_vel_limit(float target_pos, float vel_limit)
