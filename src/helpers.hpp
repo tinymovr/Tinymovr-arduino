@@ -1,22 +1,55 @@
-// Derived from Fibre
-//
-// Original License follows
-//
-// MIT License
-
-// Copyright (c) 2017-2020 The Fibre Contributors
-
-// Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-
-// The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+/*
+* This file was automatically generated using Avlos.
+* https://github.com/tinymovr/avlos
+*
+* Any changes to this file will be overwritten when
+* content is regenerated.
+*/
 
 #pragma once
 
-//#include <limits>
-//#include <climits>
-#include <Arduino.h>
+#include <cstdint>
+
+#define EP_BITS (6)
+#define RECV_DELAY_US (160.0f)
+
+typedef void (*send_callback)(uint32_t arbitration_id, uint8_t *data, uint8_t dlc, bool rtr);
+typedef bool (*recv_callback)(uint32_t arbitration_id, uint8_t *data, uint8_t *dlc);
+
+class Node {
+    public:
+
+    Node(uint8_t _can_node_id, send_callback _send_cb, recv_callback _recv_cb):
+        can_node_id(_can_node_id), send_cb(_send_cb), recv_cb(_recv_cb) {}
+
+    protected:
+    uint8_t can_node_id;
+    send_callback send_cb;
+    recv_callback recv_cb;
+    uint8_t _data[8];
+    uint8_t _dlc;
+    uint8_t get_arbitration_id(uint8_t cmd_id) {
+        return this->can_node_id << EP_BITS | cmd_id;
+    }
+    void send(uint8_t cmd_id, uint8_t *data, uint8_t data_size, bool rtr)
+    {
+        const uint8_t arb_id = this->get_arbitration_id(cmd_id);
+        this->send_cb(arb_id, data, data_size, rtr);
+    }
+
+    bool recv(uint8_t cmd_id, uint8_t *data, uint8_t *data_size, uint16_t delay_us)
+    {
+        // A delay of a few 100s of us needs to be inserted
+        // to ensure the response has been transmitted.
+        // TODO: Better handle this using an interrupt.
+        if (delay_us > 0)
+        {
+            delayMicroseconds(delay_us);
+        }
+        const uint8_t arb_id = this->get_arbitration_id(cmd_id);
+        return this->recv_cb(arb_id, data, data_size);
+    }
+};
 
 template<typename T>
 inline size_t write_le(T value, uint8_t* buffer);
@@ -37,20 +70,7 @@ inline size_t write_le<uint8_t>(uint8_t value, uint8_t* buffer) {
 }
 
 template<>
-inline size_t write_le<int8_t>(int8_t value, uint8_t* buffer) {
-    buffer[0] = value;
-    return 1;
-}
-
-template<>
 inline size_t write_le<uint16_t>(uint16_t value, uint8_t* buffer) {
-    buffer[0] = (value >> 0) & 0xff;
-    buffer[1] = (value >> 8) & 0xff;
-    return 2;
-}
-
-template<>
-inline size_t write_le<int16_t>(int16_t value, uint8_t* buffer) {
     buffer[0] = (value >> 0) & 0xff;
     buffer[1] = (value >> 8) & 0xff;
     return 2;
@@ -89,8 +109,8 @@ inline size_t write_le<uint64_t>(uint64_t value, uint8_t* buffer) {
 
 template<>
 inline size_t write_le<float>(float value, uint8_t* buffer) {
-    //static_assert(CHAR_BIT * sizeof(float) == 32, "32 bit floating point expected");
-    //static_assert(std::numeric_limits<float>::is_iec559, "IEEE 754 floating point expected");
+    static_assert(CHAR_BIT * sizeof(float) == 32, "32 bit floating point expected");
+    static_assert(std::numeric_limits<float>::is_iec559, "IEEE 754 floating point expected");
     const uint32_t * value_as_uint32 = reinterpret_cast<const uint32_t*>(&value);
     return write_le<uint32_t>(*value_as_uint32, buffer);
 }
@@ -111,13 +131,6 @@ template<>
 inline size_t read_le<uint16_t>(uint16_t* value, const uint8_t* buffer) {
     *value = (static_cast<uint16_t>(buffer[0]) << 0) |
              (static_cast<uint16_t>(buffer[1]) << 8);
-    return 2;
-}
-
-template<>
-inline size_t read_le<int16_t>(int16_t* value, const uint8_t* buffer) {
-    *value = (static_cast<int16_t>(buffer[0]) << 0) |
-             (static_cast<int16_t>(buffer[1]) << 8);
     return 2;
 }
 
