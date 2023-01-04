@@ -8,7 +8,11 @@
 
 #pragma once
 
+#if __cplusplus >= 201103L
 #include <cstdint>
+#else
+#include <stdint.h>
+#endif
 
 #define EP_BITS (6)
 #define RECV_DELAY_US (160.0f)
