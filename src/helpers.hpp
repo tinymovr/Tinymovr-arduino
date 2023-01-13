@@ -8,10 +8,10 @@
 
 #pragma once
 
-#if __cplusplus >= 201103L
-#include <cstdint>
-#else
+#ifdef ARDUINO
 #include <stdint.h>
+#else
+#include <cstdint>
 #endif
 
 #define EP_BITS (6)
