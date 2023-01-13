@@ -20,20 +20,20 @@ class Controller : Node
 
         Controller(uint8_t _can_node_id, send_callback _send_cb, recv_callback _recv_cb):
             Node(_can_node_id, _send_cb, _recv_cb)
-            , position(_can_node_id, _send_cb, _recv_cb)
-            , velocity(_can_node_id, _send_cb, _recv_cb)
-            , current(_can_node_id, _send_cb, _recv_cb)
-            , voltage(_can_node_id, _send_cb, _recv_cb) {};
+            , Position(_can_node_id, _send_cb, _recv_cb)
+            , Velocity(_can_node_id, _send_cb, _recv_cb)
+            , Current(_can_node_id, _send_cb, _recv_cb)
+            , Voltage(_can_node_id, _send_cb, _recv_cb) {};
         uint8_t get_state(void);
         void set_state(uint8_t value);
         uint8_t get_mode(void);
         void set_mode(uint8_t value);
         uint8_t get_warnings(void);
         uint8_t get_errors(void);
-        position position;
-        velocity velocity;
-        current current;
-        voltage voltage;
+        Position position;
+        Velocity velocity;
+        Current current;
+        Voltage voltage;
         void calibrate();
         void idle();
         void position_mode();

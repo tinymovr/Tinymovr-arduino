@@ -73,7 +73,7 @@ bool recv_cb(uint32_t arbitration_id, uint8_t *data, uint8_t *data_size)
 // ADAPT BELOW TO YOUR PROGRAM LOGIC
 
 // The Tinymovr object
-Device tinymovr(1, &send_cb, &recv_cb);
+Tinymovr tinymovr(1, &send_cb, &recv_cb);
 
 /*
  * Function:  setup 
