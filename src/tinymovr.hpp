@@ -8,7 +8,6 @@
 
 #pragma once
 
-#include <cstdint>
 #include <helpers.hpp>
 #include <scheduler.hpp>
 #include <controller.hpp>

@@ -8,7 +8,6 @@
 
 #pragma once
 
-#include <cstdint>
 #include <helpers.hpp>
 #include <position.hpp>
 #include <velocity.hpp>
