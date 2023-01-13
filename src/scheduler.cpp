@@ -6,7 +6,7 @@
 * content is regenerated.
 */
 
-#include <Scheduler.hpp>
+#include <scheduler.hpp>
 
 uint32_t Scheduler::get_total(void)
 {

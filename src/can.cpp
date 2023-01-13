@@ -6,7 +6,7 @@
 * content is regenerated.
 */
 
-#include <Can.hpp>
+#include <can.hpp>
 
 uint32_t Can::get_rate(void)
 {

@@ -6,7 +6,7 @@
 * content is regenerated.
 */
 
-#include <Traj_planner.hpp>
+#include <traj_planner.hpp>
 
 float Traj_planner::get_max_accel(void)
 {

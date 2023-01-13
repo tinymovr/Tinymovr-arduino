@@ -6,7 +6,7 @@
 * content is regenerated.
 */
 
-#include <Current.hpp>
+#include <current.hpp>
 
 float Current::get_Iq_setpoint(void)
 {

@@ -6,7 +6,7 @@
 * content is regenerated.
 */
 
-#include <Velocity.hpp>
+#include <velocity.hpp>
 
 float Velocity::get_setpoint(void)
 {

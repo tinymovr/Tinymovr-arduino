@@ -6,7 +6,7 @@
 * content is regenerated.
 */
 
-#include <Motor.hpp>
+#include <motor.hpp>
 
 float Motor::get_R(void)
 {

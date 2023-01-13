@@ -6,7 +6,7 @@
 * content is regenerated.
 */
 
-#include <Encoder.hpp>
+#include <encoder.hpp>
 
 float Encoder::get_position_estimate(void)
 {

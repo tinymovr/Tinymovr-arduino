@@ -6,7 +6,7 @@
 * content is regenerated.
 */
 
-#include <Watchdog.hpp>
+#include <watchdog.hpp>
 
 bool Watchdog::get_enabled(void)
 {

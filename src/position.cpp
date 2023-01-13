@@ -6,7 +6,7 @@
 * content is regenerated.
 */
 
-#include <Position.hpp>
+#include <position.hpp>
 
 float Position::get_setpoint(void)
 {

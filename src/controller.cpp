@@ -6,7 +6,7 @@
 * content is regenerated.
 */
 
-#include <Controller.hpp>
+#include <controller.hpp>
 
 uint8_t Controller::get_state(void)
 {

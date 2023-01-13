@@ -6,7 +6,7 @@
 * content is regenerated.
 */
 
-#include <Voltage.hpp>
+#include <voltage.hpp>
 
 float Voltage::get_Vq_setpoint(void)
 {
