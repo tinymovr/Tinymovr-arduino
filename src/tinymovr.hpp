@@ -74,13 +74,13 @@ class Tinymovr : Node
 
         Tinymovr(uint8_t _can_node_id, send_callback _send_cb, recv_callback _recv_cb):
             Node(_can_node_id, _send_cb, _recv_cb)
-            , Scheduler(_can_node_id, _send_cb, _recv_cb)
-            , Controller(_can_node_id, _send_cb, _recv_cb)
-            , Comms(_can_node_id, _send_cb, _recv_cb)
-            , Motor(_can_node_id, _send_cb, _recv_cb)
-            , Encoder(_can_node_id, _send_cb, _recv_cb)
-            , Traj_planner(_can_node_id, _send_cb, _recv_cb)
-            , Watchdog(_can_node_id, _send_cb, _recv_cb) {};
+            , scheduler(_can_node_id, _send_cb, _recv_cb)
+            , controller(_can_node_id, _send_cb, _recv_cb)
+            , comms(_can_node_id, _send_cb, _recv_cb)
+            , motor(_can_node_id, _send_cb, _recv_cb)
+            , encoder(_can_node_id, _send_cb, _recv_cb)
+            , traj_planner(_can_node_id, _send_cb, _recv_cb)
+            , watchdog(_can_node_id, _send_cb, _recv_cb) {};
         uint32_t get_protocol_hash(void);
         uint32_t get_uid(void);
         float get_Vbus(void);
