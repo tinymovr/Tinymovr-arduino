@@ -5,9 +5,7 @@
 * Any changes to this file will be overwritten when
 * content is regenerated.
 */
-
-#include <device.hpp>
-
+#include <tinymovr.hpp>
 uint32_t Device::get_protocol_hash(void)
 {
     uint32_t value = 0;
@@ -18,7 +16,6 @@ uint32_t Device::get_protocol_hash(void)
     }
     return value;
 }
-
 uint32_t Device::get_uid(void)
 {
     uint32_t value = 0;
@@ -29,7 +26,6 @@ uint32_t Device::get_uid(void)
     }
     return value;
 }
-
 float Device::get_Vbus(void)
 {
     float value = 0;
@@ -40,7 +36,6 @@ float Device::get_Vbus(void)
     }
     return value;
 }
-
 float Device::get_Ibus(void)
 {
     float value = 0;
@@ -51,7 +46,6 @@ float Device::get_Ibus(void)
     }
     return value;
 }
-
 float Device::get_power(void)
 {
     float value = 0;
@@ -62,7 +56,6 @@ float Device::get_power(void)
     }
     return value;
 }
-
 float Device::get_temp(void)
 {
     float value = 0;
@@ -73,7 +66,6 @@ float Device::get_temp(void)
     }
     return value;
 }
-
 bool Device::get_calibrated(void)
 {
     bool value = 0;
@@ -84,7 +76,6 @@ bool Device::get_calibrated(void)
     }
     return value;
 }
-
 uint8_t Device::get_errors(void)
 {
     uint8_t value = 0;
@@ -110,6 +101,4 @@ void Device::reset()
 {
     this->send(10, this->_data, 0, true);
 }
-
-
 

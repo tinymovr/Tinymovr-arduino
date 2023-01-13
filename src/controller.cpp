@@ -64,6 +64,7 @@ uint8_t controller::get_errors(void)
     return value;
 }
 
+
 void controller::calibrate()
 {
     this->send(35, this->_data, 0, true);

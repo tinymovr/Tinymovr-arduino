@@ -87,3 +87,4 @@ uint8_t encoder::get_errors(void)
 }
 
 
+

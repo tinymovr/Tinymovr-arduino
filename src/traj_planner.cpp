@@ -59,6 +59,7 @@ void traj_planner::set_max_vel(float value)
     this->send(60, this->_data, sizeof(float), false);
 }
 
+
 void traj_planner::move_to(float pos_setpoint)
 {
     uint8_t data_len = 0;
@@ -76,7 +77,6 @@ void traj_planner::move_to_tlimit(float pos_setpoint)
 
     this->send(62, this->_data, data_len, false);
 }
-
 uint8_t traj_planner::get_errors(void)
 {
     uint8_t value = 0;
@@ -87,5 +87,6 @@ uint8_t traj_planner::get_errors(void)
     }
     return value;
 }
+
 
 
