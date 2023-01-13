@@ -11,11 +11,11 @@
 #include <cstdint>
 #include <helpers.hpp>
 
-class voltage : Node
+class Voltage : Node
 {
     public:
 
-        voltage(uint8_t _can_node_id, send_callback _send_cb, recv_callback _recv_cb):
+        Voltage(uint8_t _can_node_id, send_callback _send_cb, recv_callback _recv_cb):
             Node(_can_node_id, _send_cb, _recv_cb) {};
         float get_Vq_setpoint(void);
 

@@ -15,11 +15,11 @@
 #include <current.hpp>
 #include <voltage.hpp>
 
-class controller : Node
+class Controller : Node
 {
     public:
 
-        controller(uint8_t _can_node_id, send_callback _send_cb, recv_callback _recv_cb):
+        Controller(uint8_t _can_node_id, send_callback _send_cb, recv_callback _recv_cb):
             Node(_can_node_id, _send_cb, _recv_cb)
             , position(_can_node_id, _send_cb, _recv_cb)
             , velocity(_can_node_id, _send_cb, _recv_cb)

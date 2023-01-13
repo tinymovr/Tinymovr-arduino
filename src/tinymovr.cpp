@@ -6,7 +6,7 @@
 * content is regenerated.
 */
 #include <tinymovr.hpp>
-uint32_t Device::get_protocol_hash(void)
+uint32_t Tinymovr::get_protocol_hash(void)
 {
     uint32_t value = 0;
     this->send(0, this->_data, 0, true);
@@ -16,7 +16,7 @@ uint32_t Device::get_protocol_hash(void)
     }
     return value;
 }
-uint32_t Device::get_uid(void)
+uint32_t Tinymovr::get_uid(void)
 {
     uint32_t value = 0;
     this->send(1, this->_data, 0, true);
@@ -26,7 +26,7 @@ uint32_t Device::get_uid(void)
     }
     return value;
 }
-float Device::get_Vbus(void)
+float Tinymovr::get_Vbus(void)
 {
     float value = 0;
     this->send(2, this->_data, 0, true);
@@ -36,7 +36,7 @@ float Device::get_Vbus(void)
     }
     return value;
 }
-float Device::get_Ibus(void)
+float Tinymovr::get_Ibus(void)
 {
     float value = 0;
     this->send(3, this->_data, 0, true);
@@ -46,7 +46,7 @@ float Device::get_Ibus(void)
     }
     return value;
 }
-float Device::get_power(void)
+float Tinymovr::get_power(void)
 {
     float value = 0;
     this->send(4, this->_data, 0, true);
@@ -56,7 +56,7 @@ float Device::get_power(void)
     }
     return value;
 }
-float Device::get_temp(void)
+float Tinymovr::get_temp(void)
 {
     float value = 0;
     this->send(5, this->_data, 0, true);
@@ -66,7 +66,7 @@ float Device::get_temp(void)
     }
     return value;
 }
-bool Device::get_calibrated(void)
+bool Tinymovr::get_calibrated(void)
 {
     bool value = 0;
     this->send(6, this->_data, 0, true);
@@ -76,7 +76,7 @@ bool Device::get_calibrated(void)
     }
     return value;
 }
-uint8_t Device::get_errors(void)
+uint8_t Tinymovr::get_errors(void)
 {
     uint8_t value = 0;
     this->send(7, this->_data, 0, true);
@@ -87,17 +87,17 @@ uint8_t Device::get_errors(void)
     return value;
 }
 
-void Device::save_config()
+void Tinymovr::save_config()
 {
     this->send(8, this->_data, 0, true);
 }
 
-void Device::erase_config()
+void Tinymovr::erase_config()
 {
     this->send(9, this->_data, 0, true);
 }
 
-void Device::reset()
+void Tinymovr::reset()
 {
     this->send(10, this->_data, 0, true);
 }

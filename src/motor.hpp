@@ -11,11 +11,11 @@
 #include <cstdint>
 #include <helpers.hpp>
 
-class motor : Node
+class Motor : Node
 {
     public:
 
-        motor(uint8_t _can_node_id, send_callback _send_cb, recv_callback _recv_cb):
+        Motor(uint8_t _can_node_id, send_callback _send_cb, recv_callback _recv_cb):
             Node(_can_node_id, _send_cb, _recv_cb) {};
         float get_R(void);
         void set_R(float value);

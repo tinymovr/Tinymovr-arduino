@@ -11,11 +11,11 @@
 #include <cstdint>
 #include <helpers.hpp>
 
-class traj_planner : Node
+class Traj_planner : Node
 {
     public:
 
-        traj_planner(uint8_t _can_node_id, send_callback _send_cb, recv_callback _recv_cb):
+        Traj_planner(uint8_t _can_node_id, send_callback _send_cb, recv_callback _recv_cb):
             Node(_can_node_id, _send_cb, _recv_cb) {};
         float get_max_accel(void);
         void set_max_accel(float value);

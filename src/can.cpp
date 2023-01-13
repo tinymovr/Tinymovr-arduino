@@ -6,9 +6,9 @@
 * content is regenerated.
 */
 
-#include <can.hpp>
+#include <Can.hpp>
 
-uint32_t can::get_rate(void)
+uint32_t Can::get_rate(void)
 {
     uint32_t value = 0;
     this->send(41, this->_data, 0, true);
@@ -19,13 +19,13 @@ uint32_t can::get_rate(void)
     return value;
 }
 
-void can::set_rate(uint32_t value)
+void Can::set_rate(uint32_t value)
 {
     write_le(this->_data, value);
     this->send(41, this->_data, sizeof(uint32_t), false);
 }
 
-uint32_t can::get_id(void)
+uint32_t Can::get_id(void)
 {
     uint32_t value = 0;
     this->send(42, this->_data, 0, true);
@@ -36,7 +36,7 @@ uint32_t can::get_id(void)
     return value;
 }
 
-void can::set_id(uint32_t value)
+void Can::set_id(uint32_t value)
 {
     write_le(this->_data, value);
     this->send(42, this->_data, sizeof(uint32_t), false);

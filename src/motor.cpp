@@ -6,9 +6,9 @@
 * content is regenerated.
 */
 
-#include <motor.hpp>
+#include <Motor.hpp>
 
-float motor::get_R(void)
+float Motor::get_R(void)
 {
     float value = 0;
     this->send(43, this->_data, 0, true);
@@ -19,13 +19,13 @@ float motor::get_R(void)
     return value;
 }
 
-void motor::set_R(float value)
+void Motor::set_R(float value)
 {
     write_le(this->_data, value);
     this->send(43, this->_data, sizeof(float), false);
 }
 
-float motor::get_L(void)
+float Motor::get_L(void)
 {
     float value = 0;
     this->send(44, this->_data, 0, true);
@@ -36,13 +36,13 @@ float motor::get_L(void)
     return value;
 }
 
-void motor::set_L(float value)
+void Motor::set_L(float value)
 {
     write_le(this->_data, value);
     this->send(44, this->_data, sizeof(float), false);
 }
 
-uint8_t motor::get_pole_pairs(void)
+uint8_t Motor::get_pole_pairs(void)
 {
     uint8_t value = 0;
     this->send(45, this->_data, 0, true);
@@ -53,13 +53,13 @@ uint8_t motor::get_pole_pairs(void)
     return value;
 }
 
-void motor::set_pole_pairs(uint8_t value)
+void Motor::set_pole_pairs(uint8_t value)
 {
     write_le(this->_data, value);
     this->send(45, this->_data, sizeof(uint8_t), false);
 }
 
-uint8_t motor::get_type(void)
+uint8_t Motor::get_type(void)
 {
     uint8_t value = 0;
     this->send(46, this->_data, 0, true);
@@ -70,13 +70,13 @@ uint8_t motor::get_type(void)
     return value;
 }
 
-void motor::set_type(uint8_t value)
+void Motor::set_type(uint8_t value)
 {
     write_le(this->_data, value);
     this->send(46, this->_data, sizeof(uint8_t), false);
 }
 
-float motor::get_offset(void)
+float Motor::get_offset(void)
 {
     float value = 0;
     this->send(47, this->_data, 0, true);
@@ -87,13 +87,13 @@ float motor::get_offset(void)
     return value;
 }
 
-void motor::set_offset(float value)
+void Motor::set_offset(float value)
 {
     write_le(this->_data, value);
     this->send(47, this->_data, sizeof(float), false);
 }
 
-int8_t motor::get_direction(void)
+int8_t Motor::get_direction(void)
 {
     int8_t value = 0;
     this->send(48, this->_data, 0, true);
@@ -104,13 +104,13 @@ int8_t motor::get_direction(void)
     return value;
 }
 
-void motor::set_direction(int8_t value)
+void Motor::set_direction(int8_t value)
 {
     write_le(this->_data, value);
     this->send(48, this->_data, sizeof(int8_t), false);
 }
 
-bool motor::get_calibrated(void)
+bool Motor::get_calibrated(void)
 {
     bool value = 0;
     this->send(49, this->_data, 0, true);
@@ -121,7 +121,7 @@ bool motor::get_calibrated(void)
     return value;
 }
 
-float motor::get_I_cal(void)
+float Motor::get_I_cal(void)
 {
     float value = 0;
     this->send(50, this->_data, 0, true);
@@ -132,13 +132,13 @@ float motor::get_I_cal(void)
     return value;
 }
 
-void motor::set_I_cal(float value)
+void Motor::set_I_cal(float value)
 {
     write_le(this->_data, value);
     this->send(50, this->_data, sizeof(float), false);
 }
 
-uint8_t motor::get_errors(void)
+uint8_t Motor::get_errors(void)
 {
     uint8_t value = 0;
     this->send(51, this->_data, 0, true);

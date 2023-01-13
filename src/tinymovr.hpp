@@ -18,6 +18,8 @@
 #include <traj_planner.hpp>
 #include <watchdog.hpp>
 
+static uint32_t avlos_proto_hash = 2510016821;
+
 enum errors_flags
 {
     ERRORS_NONE = 0,
@@ -67,19 +69,19 @@ enum traj_planner_errors_flags
     TRAJ_PLANNER_ERRORS_VCRUISE_OVER_LIMIT = (1 << 1)
 };
 
-class Device : Node
+class Tinymovr : Node
 {
     public:
 
-        Device(uint8_t _can_node_id, send_callback _send_cb, recv_callback _recv_cb):
+        Tinymovr(uint8_t _can_node_id, send_callback _send_cb, recv_callback _recv_cb):
             Node(_can_node_id, _send_cb, _recv_cb)
-            , scheduler(_can_node_id, _send_cb, _recv_cb)
-            , controller(_can_node_id, _send_cb, _recv_cb)
-            , comms(_can_node_id, _send_cb, _recv_cb)
-            , motor(_can_node_id, _send_cb, _recv_cb)
-            , encoder(_can_node_id, _send_cb, _recv_cb)
-            , traj_planner(_can_node_id, _send_cb, _recv_cb)
-            , watchdog(_can_node_id, _send_cb, _recv_cb) {};
+            , Scheduler(_can_node_id, _send_cb, _recv_cb)
+            , Controller(_can_node_id, _send_cb, _recv_cb)
+            , Comms(_can_node_id, _send_cb, _recv_cb)
+            , Motor(_can_node_id, _send_cb, _recv_cb)
+            , Encoder(_can_node_id, _send_cb, _recv_cb)
+            , Traj_planner(_can_node_id, _send_cb, _recv_cb)
+            , Watchdog(_can_node_id, _send_cb, _recv_cb) {};
         uint32_t get_protocol_hash(void);
         uint32_t get_uid(void);
         float get_Vbus(void);
@@ -91,12 +93,12 @@ class Device : Node
         void save_config();
         void erase_config();
         void reset();
-        scheduler scheduler;
-        controller controller;
-        comms comms;
-        motor motor;
-        encoder encoder;
-        traj_planner traj_planner;
-        watchdog watchdog;
+        Scheduler scheduler;
+        Controller controller;
+        Comms comms;
+        Motor motor;
+        Encoder encoder;
+        Traj_planner traj_planner;
+        Watchdog watchdog;
 
 };

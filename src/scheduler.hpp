@@ -11,11 +11,11 @@
 #include <cstdint>
 #include <helpers.hpp>
 
-class scheduler : Node
+class Scheduler : Node
 {
     public:
 
-        scheduler(uint8_t _can_node_id, send_callback _send_cb, recv_callback _recv_cb):
+        Scheduler(uint8_t _can_node_id, send_callback _send_cb, recv_callback _recv_cb):
             Node(_can_node_id, _send_cb, _recv_cb) {};
         uint32_t get_total(void);
         uint32_t get_busy(void);

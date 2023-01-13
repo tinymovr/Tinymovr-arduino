@@ -11,11 +11,11 @@
 #include <cstdint>
 #include <helpers.hpp>
 
-class encoder : Node
+class Encoder : Node
 {
     public:
 
-        encoder(uint8_t _can_node_id, send_callback _send_cb, recv_callback _recv_cb):
+        Encoder(uint8_t _can_node_id, send_callback _send_cb, recv_callback _recv_cb):
             Node(_can_node_id, _send_cb, _recv_cb) {};
         float get_position_estimate(void);
         float get_velocity_estimate(void);

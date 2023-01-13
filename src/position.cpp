@@ -6,9 +6,9 @@
 * content is regenerated.
 */
 
-#include <position.hpp>
+#include <Position.hpp>
 
-float position::get_setpoint(void)
+float Position::get_setpoint(void)
 {
     float value = 0;
     this->send(18, this->_data, 0, true);
@@ -19,13 +19,13 @@ float position::get_setpoint(void)
     return value;
 }
 
-void position::set_setpoint(float value)
+void Position::set_setpoint(float value)
 {
     write_le(this->_data, value);
     this->send(18, this->_data, sizeof(float), false);
 }
 
-float position::get_p_gain(void)
+float Position::get_p_gain(void)
 {
     float value = 0;
     this->send(19, this->_data, 0, true);
@@ -36,7 +36,7 @@ float position::get_p_gain(void)
     return value;
 }
 
-void position::set_p_gain(float value)
+void Position::set_p_gain(float value)
 {
     write_le(this->_data, value);
     this->send(19, this->_data, sizeof(float), false);

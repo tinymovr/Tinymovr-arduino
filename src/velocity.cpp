@@ -6,9 +6,9 @@
 * content is regenerated.
 */
 
-#include <velocity.hpp>
+#include <Velocity.hpp>
 
-float velocity::get_setpoint(void)
+float Velocity::get_setpoint(void)
 {
     float value = 0;
     this->send(20, this->_data, 0, true);
@@ -19,13 +19,13 @@ float velocity::get_setpoint(void)
     return value;
 }
 
-void velocity::set_setpoint(float value)
+void Velocity::set_setpoint(float value)
 {
     write_le(this->_data, value);
     this->send(20, this->_data, sizeof(float), false);
 }
 
-float velocity::get_limit(void)
+float Velocity::get_limit(void)
 {
     float value = 0;
     this->send(21, this->_data, 0, true);
@@ -36,13 +36,13 @@ float velocity::get_limit(void)
     return value;
 }
 
-void velocity::set_limit(float value)
+void Velocity::set_limit(float value)
 {
     write_le(this->_data, value);
     this->send(21, this->_data, sizeof(float), false);
 }
 
-float velocity::get_p_gain(void)
+float Velocity::get_p_gain(void)
 {
     float value = 0;
     this->send(22, this->_data, 0, true);
@@ -53,13 +53,13 @@ float velocity::get_p_gain(void)
     return value;
 }
 
-void velocity::set_p_gain(float value)
+void Velocity::set_p_gain(float value)
 {
     write_le(this->_data, value);
     this->send(22, this->_data, sizeof(float), false);
 }
 
-float velocity::get_i_gain(void)
+float Velocity::get_i_gain(void)
 {
     float value = 0;
     this->send(23, this->_data, 0, true);
@@ -70,13 +70,13 @@ float velocity::get_i_gain(void)
     return value;
 }
 
-void velocity::set_i_gain(float value)
+void Velocity::set_i_gain(float value)
 {
     write_le(this->_data, value);
     this->send(23, this->_data, sizeof(float), false);
 }
 
-float velocity::get_deadband(void)
+float Velocity::get_deadband(void)
 {
     float value = 0;
     this->send(24, this->_data, 0, true);
@@ -87,13 +87,13 @@ float velocity::get_deadband(void)
     return value;
 }
 
-void velocity::set_deadband(float value)
+void Velocity::set_deadband(float value)
 {
     write_le(this->_data, value);
     this->send(24, this->_data, sizeof(float), false);
 }
 
-float velocity::get_increment(void)
+float Velocity::get_increment(void)
 {
     float value = 0;
     this->send(25, this->_data, 0, true);
@@ -104,7 +104,7 @@ float velocity::get_increment(void)
     return value;
 }
 
-void velocity::set_increment(float value)
+void Velocity::set_increment(float value)
 {
     write_le(this->_data, value);
     this->send(25, this->_data, sizeof(float), false);

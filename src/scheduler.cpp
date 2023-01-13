@@ -6,9 +6,9 @@
 * content is regenerated.
 */
 
-#include <scheduler.hpp>
+#include <Scheduler.hpp>
 
-uint32_t scheduler::get_total(void)
+uint32_t Scheduler::get_total(void)
 {
     uint32_t value = 0;
     this->send(11, this->_data, 0, true);
@@ -19,7 +19,7 @@ uint32_t scheduler::get_total(void)
     return value;
 }
 
-uint32_t scheduler::get_busy(void)
+uint32_t Scheduler::get_busy(void)
 {
     uint32_t value = 0;
     this->send(12, this->_data, 0, true);
@@ -30,7 +30,7 @@ uint32_t scheduler::get_busy(void)
     return value;
 }
 
-uint8_t scheduler::get_errors(void)
+uint8_t Scheduler::get_errors(void)
 {
     uint8_t value = 0;
     this->send(13, this->_data, 0, true);

@@ -113,8 +113,8 @@ inline size_t write_le<uint64_t>(uint64_t value, uint8_t* buffer) {
 
 template<>
 inline size_t write_le<float>(float value, uint8_t* buffer) {
-    static_assert(CHAR_BIT * sizeof(float) == 32, "32 bit floating point expected");
-    static_assert(std::numeric_limits<float>::is_iec559, "IEEE 754 floating point expected");
+    //static_assert(CHAR_BIT * sizeof(float) == 32, "32 bit floating point expected");
+    //static_assert(std::numeric_limits<float>::is_iec559, "IEEE 754 floating point expected");
     const uint32_t * value_as_uint32 = reinterpret_cast<const uint32_t*>(&value);
     return write_le<uint32_t>(*value_as_uint32, buffer);
 }

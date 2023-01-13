@@ -6,9 +6,9 @@
 * content is regenerated.
 */
 
-#include <watchdog.hpp>
+#include <Watchdog.hpp>
 
-bool watchdog::get_enabled(void)
+bool Watchdog::get_enabled(void)
 {
     bool value = 0;
     this->send(64, this->_data, 0, true);
@@ -19,13 +19,13 @@ bool watchdog::get_enabled(void)
     return value;
 }
 
-void watchdog::set_enabled(bool value)
+void Watchdog::set_enabled(bool value)
 {
     write_le(this->_data, value);
     this->send(64, this->_data, sizeof(bool), false);
 }
 
-bool watchdog::get_triggered(void)
+bool Watchdog::get_triggered(void)
 {
     bool value = 0;
     this->send(65, this->_data, 0, true);
@@ -36,7 +36,7 @@ bool watchdog::get_triggered(void)
     return value;
 }
 
-float watchdog::get_timeout(void)
+float Watchdog::get_timeout(void)
 {
     float value = 0;
     this->send(66, this->_data, 0, true);
@@ -47,7 +47,7 @@ float watchdog::get_timeout(void)
     return value;
 }
 
-void watchdog::set_timeout(float value)
+void Watchdog::set_timeout(float value)
 {
     write_le(this->_data, value);
     this->send(66, this->_data, sizeof(float), false);

@@ -6,9 +6,9 @@
 * content is regenerated.
 */
 
-#include <voltage.hpp>
+#include <Voltage.hpp>
 
-float voltage::get_Vq_setpoint(void)
+float Voltage::get_Vq_setpoint(void)
 {
     float value = 0;
     this->send(34, this->_data, 0, true);
