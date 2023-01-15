@@ -108,7 +108,7 @@ inline size_t read_le<uint8_t>(uint8_t* value, const uint8_t* buffer) {
 }
 
 template<>
-inline size_t read_le<uint8_t>(int8_t* value, const uint8_t* buffer) {
+inline size_t read_le<int8_t>(int8_t* value, const uint8_t* buffer) {
     *value = buffer[0];
     return 1;
 }
