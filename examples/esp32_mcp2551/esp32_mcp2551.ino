@@ -106,18 +106,18 @@ void loop()
     if (receivedChar == 'Q')
     {
       Serial.println("Received Calibration command");
-      tinymovr.controller.set_state(STATE_CALIBRATE);
+      tinymovr.controller.set_state(1);
     }
     else if (receivedChar == 'A')
     {
       Serial.println("Received Closed Loop command");
-      tinymovr.controller.set_state(STATE_CL_CONTROL);
-      tinymovr.controller.set_mode(CTRL_POSITION);
+      tinymovr.controller.set_state(2);
+      tinymovr.controller.set_mode(2);
     }
     else if (receivedChar == 'Z')
     {
       Serial.println("Received Idle command");
-      tinymovr.controller.set_state(STATE_IDLE);
+      tinymovr.controller.set_state(0);
     }
     else if (receivedChar == 'R')
     {
