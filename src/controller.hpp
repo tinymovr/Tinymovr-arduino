@@ -14,11 +14,11 @@
 #include <current.hpp>
 #include <voltage.hpp>
 
-class Controller : Node
+class Controller_ : Node
 {
     public:
 
-        Controller(uint8_t _can_node_id, send_callback _send_cb, recv_callback _recv_cb):
+        Controller_(uint8_t _can_node_id, send_callback _send_cb, recv_callback _recv_cb):
             Node(_can_node_id, _send_cb, _recv_cb)
             , position(_can_node_id, _send_cb, _recv_cb)
             , velocity(_can_node_id, _send_cb, _recv_cb)
@@ -30,10 +30,10 @@ class Controller : Node
         void set_mode(uint8_t value);
         uint8_t get_warnings(void);
         uint8_t get_errors(void);
-        Position position;
-        Velocity velocity;
-        Current current;
-        Voltage voltage;
+        Position_ position;
+        Velocity_ velocity;
+        Current_ current;
+        Voltage_ voltage;
         void calibrate();
         void idle();
         void position_mode();

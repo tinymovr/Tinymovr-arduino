@@ -8,7 +8,7 @@
 
 #include <controller.hpp>
 
-uint8_t Controller::get_state(void)
+uint8_t Controller_::get_state(void)
 {
     uint8_t value = 0;
     this->send(14, this->_data, 0, true);
@@ -19,13 +19,13 @@ uint8_t Controller::get_state(void)
     return value;
 }
 
-void Controller::set_state(uint8_t value)
+void Controller_::set_state(uint8_t value)
 {
     write_le(this->_data, value);
     this->send(14, this->_data, sizeof(uint8_t), false);
 }
 
-uint8_t Controller::get_mode(void)
+uint8_t Controller_::get_mode(void)
 {
     uint8_t value = 0;
     this->send(15, this->_data, 0, true);
@@ -36,13 +36,13 @@ uint8_t Controller::get_mode(void)
     return value;
 }
 
-void Controller::set_mode(uint8_t value)
+void Controller_::set_mode(uint8_t value)
 {
     write_le(this->_data, value);
     this->send(15, this->_data, sizeof(uint8_t), false);
 }
 
-uint8_t Controller::get_warnings(void)
+uint8_t Controller_::get_warnings(void)
 {
     uint8_t value = 0;
     this->send(16, this->_data, 0, true);
@@ -53,7 +53,7 @@ uint8_t Controller::get_warnings(void)
     return value;
 }
 
-uint8_t Controller::get_errors(void)
+uint8_t Controller_::get_errors(void)
 {
     uint8_t value = 0;
     this->send(17, this->_data, 0, true);
@@ -65,32 +65,32 @@ uint8_t Controller::get_errors(void)
 }
 
 
-void Controller::calibrate()
+void Controller_::calibrate()
 {
     this->send(35, this->_data, 0, true);
 }
 
-void Controller::idle()
+void Controller_::idle()
 {
     this->send(36, this->_data, 0, true);
 }
 
-void Controller::position_mode()
+void Controller_::position_mode()
 {
     this->send(37, this->_data, 0, true);
 }
 
-void Controller::velocity_mode()
+void Controller_::velocity_mode()
 {
     this->send(38, this->_data, 0, true);
 }
 
-void Controller::current_mode()
+void Controller_::current_mode()
 {
     this->send(39, this->_data, 0, true);
 }
 
-float Controller::set_pos_vel_setpoints(float pos_setpoint, float vel_setpoint)
+float Controller_::set_pos_vel_setpoints(float pos_setpoint, float vel_setpoint)
 {
     uint8_t data_len = 0;
     write_le(this->_data + data_len, pos_setpoint);

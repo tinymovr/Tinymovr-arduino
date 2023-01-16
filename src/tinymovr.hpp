@@ -92,12 +92,12 @@ class Tinymovr : Node
         void save_config();
         void erase_config();
         void reset();
-        Scheduler scheduler;
-        Controller controller;
-        Comms comms;
-        Motor motor;
-        Encoder encoder;
-        Traj_planner traj_planner;
-        Watchdog watchdog;
+        Scheduler_ scheduler;
+        Controller_ controller;
+        Comms_ comms;
+        Motor_ motor;
+        Encoder_ encoder;
+        Traj_planner_ traj_planner;
+        Watchdog_ watchdog;
 
 };

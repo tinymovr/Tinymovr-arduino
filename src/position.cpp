@@ -8,7 +8,7 @@
 
 #include <position.hpp>
 
-float Position::get_setpoint(void)
+float Position_::get_setpoint(void)
 {
     float value = 0;
     this->send(18, this->_data, 0, true);
@@ -19,13 +19,13 @@ float Position::get_setpoint(void)
     return value;
 }
 
-void Position::set_setpoint(float value)
+void Position_::set_setpoint(float value)
 {
     write_le(this->_data, value);
     this->send(18, this->_data, sizeof(float), false);
 }
 
-float Position::get_p_gain(void)
+float Position_::get_p_gain(void)
 {
     float value = 0;
     this->send(19, this->_data, 0, true);
@@ -36,7 +36,7 @@ float Position::get_p_gain(void)
     return value;
 }
 
-void Position::set_p_gain(float value)
+void Position_::set_p_gain(float value)
 {
     write_le(this->_data, value);
     this->send(19, this->_data, sizeof(float), false);

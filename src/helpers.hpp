@@ -8,7 +8,7 @@
 
 #pragma once
 
-#ifdef ARDUINO
+#ifdef ARDUINO | __cplusplus < 201103L
 #include <stdint.h>
 #else
 #include <cstdint>

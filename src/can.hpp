@@ -10,11 +10,11 @@
 
 #include <helpers.hpp>
 
-class Can : Node
+class Can_ : Node
 {
     public:
 
-        Can(uint8_t _can_node_id, send_callback _send_cb, recv_callback _recv_cb):
+        Can_(uint8_t _can_node_id, send_callback _send_cb, recv_callback _recv_cb):
             Node(_can_node_id, _send_cb, _recv_cb) {};
         uint32_t get_rate(void);
         void set_rate(uint32_t value);

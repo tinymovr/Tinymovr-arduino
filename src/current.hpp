@@ -10,11 +10,11 @@
 
 #include <helpers.hpp>
 
-class Current : Node
+class Current_ : Node
 {
     public:
 
-        Current(uint8_t _can_node_id, send_callback _send_cb, recv_callback _recv_cb):
+        Current_(uint8_t _can_node_id, send_callback _send_cb, recv_callback _recv_cb):
             Node(_can_node_id, _send_cb, _recv_cb) {};
         float get_Iq_setpoint(void);
         void set_Iq_setpoint(float value);

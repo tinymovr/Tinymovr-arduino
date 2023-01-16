@@ -10,11 +10,11 @@
 
 #include <helpers.hpp>
 
-class Position : Node
+class Position_ : Node
 {
     public:
 
-        Position(uint8_t _can_node_id, send_callback _send_cb, recv_callback _recv_cb):
+        Position_(uint8_t _can_node_id, send_callback _send_cb, recv_callback _recv_cb):
             Node(_can_node_id, _send_cb, _recv_cb) {};
         float get_setpoint(void);
         void set_setpoint(float value);

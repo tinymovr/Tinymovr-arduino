@@ -10,11 +10,11 @@
 
 #include <helpers.hpp>
 
-class Watchdog : Node
+class Watchdog_ : Node
 {
     public:
 
-        Watchdog(uint8_t _can_node_id, send_callback _send_cb, recv_callback _recv_cb):
+        Watchdog_(uint8_t _can_node_id, send_callback _send_cb, recv_callback _recv_cb):
             Node(_can_node_id, _send_cb, _recv_cb) {};
         bool get_enabled(void);
         void set_enabled(bool value);

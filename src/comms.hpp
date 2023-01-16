@@ -11,13 +11,13 @@
 #include <helpers.hpp>
 #include <can.hpp>
 
-class Comms : Node
+class Comms_ : Node
 {
     public:
 
-        Comms(uint8_t _can_node_id, send_callback _send_cb, recv_callback _recv_cb):
+        Comms_(uint8_t _can_node_id, send_callback _send_cb, recv_callback _recv_cb):
             Node(_can_node_id, _send_cb, _recv_cb)
             , can(_can_node_id, _send_cb, _recv_cb) {};
-        Can can;
+        Can_ can;
 
 };
