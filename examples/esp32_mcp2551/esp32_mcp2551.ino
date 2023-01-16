@@ -156,9 +156,9 @@ void loop()
       Serial.print(tinymovr.encoder.get_velocity_estimate());
       Serial.print("\n");
       Serial.print("Iq estimate: ");
-      Serial.print(tinymovr.controller.current.get_estimate());
+      Serial.print(tinymovr.controller.current.get_Iq_estimate());
       Serial.print(", Iq setpoint: ");
-      Serial.print(tinymovr.controller.current.get_setpoint());
+      Serial.print(tinymovr.controller.current.get_Iq_setpoint());
       Serial.print("\n");
       Serial.println("---");
     }
