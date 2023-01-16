@@ -16,6 +16,10 @@
 #include <cstddef>
 #endif
 
+#if defined ARDUINO
+#include "Arduino.h"
+#endif
+
 #define EP_BITS (6)
 #define RECV_DELAY_US (160.0f)
 
