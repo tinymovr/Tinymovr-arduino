@@ -10,8 +10,10 @@
 
 #if defined ARDUINO || __cplusplus < 201103L
 #include <stdint.h>
+#include <stddef.h>
 #else
 #include <cstdint>
+#include <cstddef>
 #endif
 
 #define EP_BITS (6)
