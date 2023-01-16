@@ -21,7 +21,7 @@ uint32_t Can_::get_rate(void)
 
 void Can_::set_rate(uint32_t value)
 {
-    write_le(this->_data, value);
+    write_le(value, this->_data);
     this->send(41, this->_data, sizeof(uint32_t), false);
 }
 
@@ -38,7 +38,7 @@ uint32_t Can_::get_id(void)
 
 void Can_::set_id(uint32_t value)
 {
-    write_le(this->_data, value);
+    write_le(value, this->_data);
     this->send(42, this->_data, sizeof(uint32_t), false);
 }
 

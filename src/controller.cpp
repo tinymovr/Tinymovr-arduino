@@ -21,7 +21,7 @@ uint8_t Controller_::get_state(void)
 
 void Controller_::set_state(uint8_t value)
 {
-    write_le(this->_data, value);
+    write_le(value, this->_data);
     this->send(14, this->_data, sizeof(uint8_t), false);
 }
 
@@ -38,7 +38,7 @@ uint8_t Controller_::get_mode(void)
 
 void Controller_::set_mode(uint8_t value)
 {
-    write_le(this->_data, value);
+    write_le(value, this->_data);
     this->send(15, this->_data, sizeof(uint8_t), false);
 }
 
@@ -93,9 +93,9 @@ void Controller_::current_mode()
 float Controller_::set_pos_vel_setpoints(float pos_setpoint, float vel_setpoint)
 {
     uint8_t data_len = 0;
-    write_le(this->_data + data_len, pos_setpoint);
+    write_le(pos_setpoint, this->_data + data_len);
     data_len += sizeof(pos_setpoint);
-    write_le(this->_data + data_len, vel_setpoint);
+    write_le(vel_setpoint, this->_data + data_len);
     data_len += sizeof(vel_setpoint);
 
     this->send(40, this->_data, data_len, false);

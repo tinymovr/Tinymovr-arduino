@@ -21,7 +21,7 @@ float Motor_::get_R(void)
 
 void Motor_::set_R(float value)
 {
-    write_le(this->_data, value);
+    write_le(value, this->_data);
     this->send(43, this->_data, sizeof(float), false);
 }
 
@@ -38,7 +38,7 @@ float Motor_::get_L(void)
 
 void Motor_::set_L(float value)
 {
-    write_le(this->_data, value);
+    write_le(value, this->_data);
     this->send(44, this->_data, sizeof(float), false);
 }
 
@@ -55,7 +55,7 @@ uint8_t Motor_::get_pole_pairs(void)
 
 void Motor_::set_pole_pairs(uint8_t value)
 {
-    write_le(this->_data, value);
+    write_le(value, this->_data);
     this->send(45, this->_data, sizeof(uint8_t), false);
 }
 
@@ -72,7 +72,7 @@ uint8_t Motor_::get_type(void)
 
 void Motor_::set_type(uint8_t value)
 {
-    write_le(this->_data, value);
+    write_le(value, this->_data);
     this->send(46, this->_data, sizeof(uint8_t), false);
 }
 
@@ -89,7 +89,7 @@ float Motor_::get_offset(void)
 
 void Motor_::set_offset(float value)
 {
-    write_le(this->_data, value);
+    write_le(value, this->_data);
     this->send(47, this->_data, sizeof(float), false);
 }
 
@@ -106,7 +106,7 @@ int8_t Motor_::get_direction(void)
 
 void Motor_::set_direction(int8_t value)
 {
-    write_le(this->_data, value);
+    write_le(value, this->_data);
     this->send(48, this->_data, sizeof(int8_t), false);
 }
 
@@ -134,7 +134,7 @@ float Motor_::get_I_cal(void)
 
 void Motor_::set_I_cal(float value)
 {
-    write_le(this->_data, value);
+    write_le(value, this->_data);
     this->send(50, this->_data, sizeof(float), false);
 }
 

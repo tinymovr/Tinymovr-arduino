@@ -43,7 +43,7 @@ uint8_t Encoder_::get_type(void)
 
 void Encoder_::set_type(uint8_t value)
 {
-    write_le(this->_data, value);
+    write_le(value, this->_data);
     this->send(54, this->_data, sizeof(uint8_t), false);
 }
 
@@ -60,7 +60,7 @@ float Encoder_::get_bandwidth(void)
 
 void Encoder_::set_bandwidth(float value)
 {
-    write_le(this->_data, value);
+    write_le(value, this->_data);
     this->send(55, this->_data, sizeof(float), false);
 }
 

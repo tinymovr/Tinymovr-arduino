@@ -21,7 +21,7 @@ float Velocity_::get_setpoint(void)
 
 void Velocity_::set_setpoint(float value)
 {
-    write_le(this->_data, value);
+    write_le(value, this->_data);
     this->send(20, this->_data, sizeof(float), false);
 }
 
@@ -38,7 +38,7 @@ float Velocity_::get_limit(void)
 
 void Velocity_::set_limit(float value)
 {
-    write_le(this->_data, value);
+    write_le(value, this->_data);
     this->send(21, this->_data, sizeof(float), false);
 }
 
@@ -55,7 +55,7 @@ float Velocity_::get_p_gain(void)
 
 void Velocity_::set_p_gain(float value)
 {
-    write_le(this->_data, value);
+    write_le(value, this->_data);
     this->send(22, this->_data, sizeof(float), false);
 }
 
@@ -72,7 +72,7 @@ float Velocity_::get_i_gain(void)
 
 void Velocity_::set_i_gain(float value)
 {
-    write_le(this->_data, value);
+    write_le(value, this->_data);
     this->send(23, this->_data, sizeof(float), false);
 }
 
@@ -89,7 +89,7 @@ float Velocity_::get_deadband(void)
 
 void Velocity_::set_deadband(float value)
 {
-    write_le(this->_data, value);
+    write_le(value, this->_data);
     this->send(24, this->_data, sizeof(float), false);
 }
 
@@ -106,7 +106,7 @@ float Velocity_::get_increment(void)
 
 void Velocity_::set_increment(float value)
 {
-    write_le(this->_data, value);
+    write_le(value, this->_data);
     this->send(25, this->_data, sizeof(float), false);
 }
 

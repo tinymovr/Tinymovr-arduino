@@ -21,7 +21,7 @@ float Current_::get_Iq_setpoint(void)
 
 void Current_::set_Iq_setpoint(float value)
 {
-    write_le(this->_data, value);
+    write_le(value, this->_data);
     this->send(26, this->_data, sizeof(float), false);
 }
 
@@ -49,7 +49,7 @@ float Current_::get_Iq_limit(void)
 
 void Current_::set_Iq_limit(float value)
 {
-    write_le(this->_data, value);
+    write_le(value, this->_data);
     this->send(28, this->_data, sizeof(float), false);
 }
 
@@ -77,7 +77,7 @@ float Current_::get_bandwidth(void)
 
 void Current_::set_bandwidth(float value)
 {
-    write_le(this->_data, value);
+    write_le(value, this->_data);
     this->send(30, this->_data, sizeof(float), false);
 }
 
@@ -105,7 +105,7 @@ float Current_::get_max_Ibus_regen(void)
 
 void Current_::set_max_Ibus_regen(float value)
 {
-    write_le(this->_data, value);
+    write_le(value, this->_data);
     this->send(32, this->_data, sizeof(float), false);
 }
 
@@ -122,7 +122,7 @@ float Current_::get_max_Ibrake(void)
 
 void Current_::set_max_Ibrake(float value)
 {
-    write_le(this->_data, value);
+    write_le(value, this->_data);
     this->send(33, this->_data, sizeof(float), false);
 }
 

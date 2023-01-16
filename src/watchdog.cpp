@@ -21,7 +21,7 @@ bool Watchdog_::get_enabled(void)
 
 void Watchdog_::set_enabled(bool value)
 {
-    write_le(this->_data, value);
+    write_le(value, this->_data);
     this->send(64, this->_data, sizeof(bool), false);
 }
 
@@ -49,7 +49,7 @@ float Watchdog_::get_timeout(void)
 
 void Watchdog_::set_timeout(float value)
 {
-    write_le(this->_data, value);
+    write_le(value, this->_data);
     this->send(66, this->_data, sizeof(float), false);
 }
 

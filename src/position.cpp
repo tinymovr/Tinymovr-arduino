@@ -21,7 +21,7 @@ float Position_::get_setpoint(void)
 
 void Position_::set_setpoint(float value)
 {
-    write_le(this->_data, value);
+    write_le(value, this->_data);
     this->send(18, this->_data, sizeof(float), false);
 }
 
@@ -38,7 +38,7 @@ float Position_::get_p_gain(void)
 
 void Position_::set_p_gain(float value)
 {
-    write_le(this->_data, value);
+    write_le(value, this->_data);
     this->send(19, this->_data, sizeof(float), false);
 }
 
