@@ -53,8 +53,7 @@ class Tinymovr
     void get_state(uint8_t *state, uint8_t *mode);
     void get_encoder_estimates(float *pos_estimate, float *vel_estimate);
     void get_Iq_setpoint_estimate(float *Iq_meas, float *Iq_set);
-    void get_pos_setpoint(float *pos_setpoint, float *vel_ff, float *Iq_ff);
-    void get_vel_setpoint(float *vel_setpoint, float *Iq_ff);
+    void get_setpoints(float *pos_setpoint, float *vel_setpoint);
     void set_state(uint8_t state, uint8_t mode);
     void set_mode(uint8_t mode);
     void set_pos_setpoint(float pos_setpoint, float vel_ff, float Iq_ff);

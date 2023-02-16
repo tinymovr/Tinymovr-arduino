@@ -9,8 +9,7 @@ uint8_t get_device_info_ep_id = 0x01A;
 uint8_t get_state_ep_id = 0x003;
 uint8_t get_encoder_estimates_ep_id = 0x009;
 uint8_t get_Iq_set_est_ep_id = 0x014;
-uint8_t get_pos_setpoint_ep_id = 0x00C;
-uint8_t get_vel_setpoint_ep_id = 0x00D;
+uint8_t get_setpoints_ep_id = 0x00A;
 
 uint8_t set_state_ep_id = 0x007;
 uint8_t set_pos_setpoint_ep_id = 0x00C;
@@ -97,28 +96,13 @@ void Tinymovr::get_Iq_setpoint_estimate(float *Iq_set, float *Iq_est)
     }
 }
 
-void Tinymovr::get_pos_setpoint(float *pos_setpoint, float *vel_ff, float *Iq_ff)
+void get_setpoints(float *pos_setpoint, float *vel_setpoint)
 {
-    int16_t vel_ff_;
-    int8_t Iq_ff_;
-    this->send(get_pos_setpoint_ep_id, this->_data, 0, true);
-    if (this->recv(get_pos_setpoint_ep_id, this->_data, &(this->_dlc), RECV_DELAY_US)) 
+    this->send(get_setpoints_ep_id, this->_data, 0, true);
+    if (this->recv(get_setpoints_ep_id, this->_data, &(this->_dlc), RECV_DELAY_US)) 
     {
         read_le(pos_setpoint, this->_data);
-        read_le(&vel_ff_, this->_data + 4);
-        read_le(&Iq_ff_, this->_data + 4);
-        *vel_ff = (float)(vel_ff_ * VEL_INT16_TO_FLOAT_FACTOR);
-        *Iq_ff = (float)(Iq_ff_ * IQ_INT16_TO_FLOAT_FACTOR);
-    }
-}
-
-void Tinymovr::get_vel_setpoint(float *vel_setpoint, float *Iq_ff)
-{
-    this->send(get_vel_setpoint_ep_id, this->_data, 0, true);
-    if (this->recv(get_vel_setpoint_ep_id, this->_data, &(this->_dlc), RECV_DELAY_US)) 
-    {
-        read_le(vel_setpoint, this->_data);
-        read_le(Iq_ff, this->_data + 4);
+        read_le(vel_setpoint, this->_data + 4);
     }
 }
 
