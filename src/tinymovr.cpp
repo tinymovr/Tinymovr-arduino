@@ -96,7 +96,7 @@ void Tinymovr::get_Iq_setpoint_estimate(float *Iq_set, float *Iq_est)
     }
 }
 
-void get_setpoints(float *pos_setpoint, float *vel_setpoint)
+void Tinymovr::get_setpoints(float *pos_setpoint, float *vel_setpoint)
 {
     this->send(get_setpoints_ep_id, this->_data, 0, true);
     if (this->recv(get_setpoints_ep_id, this->_data, &(this->_dlc), RECV_DELAY_US)) 
