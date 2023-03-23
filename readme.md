@@ -1,3 +1,6 @@
+> **Warning**
+>
+> You are browsing the legacy 0.x.x version of Tinymovr Arduino. For the the latest stable version, check out the [main branch](https://github.com/tinymovr/Tinymovr-arduino).
 
 # Tinymovr-Arduino library
 
