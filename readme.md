@@ -5,7 +5,9 @@
 
 This library is an easy interface for controlling Tinymovr through CAN Bus, using an Arduino and a CAN Adapter.
 
-Not all functionality is implemented yet but the library is being constantly updated.
+> **Note**
+>
+> This is the latest stable version of Tinymovr Arduino. For the legacy 0.x.x version, check out the [legacy branch](https://github.com/tinymovr/Tinymovr-arduino/tree/legacy).
 
 ## Hardware setup
 
