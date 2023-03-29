@@ -24,7 +24,7 @@
 #define RECV_DELAY_US (160.0f)
 
 typedef void (*send_callback)(uint32_t arbitration_id, uint8_t *data, uint8_t dlc, bool rtr);
-typedef bool (*recv_callback)(uint32_t arbitration_id, uint8_t *data, uint8_t *dlc);
+typedef bool (*recv_callback)(uint32_t *arbitration_id, uint8_t *data, uint8_t *dlc);
 
 class Node {
     public:
