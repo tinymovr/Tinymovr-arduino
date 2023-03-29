@@ -50,18 +50,18 @@ void send_cb(uint32_t arbitration_id, uint8_t *data, uint8_t data_size, bool rtr
  *  data: pointer to the data array to be received
  *  data_size: pointer to the variable that will hold the size of received data
  */
-bool recv_cb(uint32_t arbitration_id, uint8_t *data, uint8_t *data_size)
+bool recv_cb(uint32_t *arbitration_id, uint8_t *data, uint8_t *data_size)
 {
   (void)arbitration_id;
-  //int packetSize = CAN.parsePacket();
-  int availableBytes = CAN.available();
-  *data_size = availableBytes;
-  if (availableBytes) {
-    for (int i = 0; i < availableBytes; i++) {
+  int packetSize = CAN.parsePacket();
+  *data_size = packetSize;
+  if (packetSize) {
+    for (int i = 0; i < packetSize; i++) {
       int r = CAN.read();
       if (r == -1) return false;
       data[i] = (uint8_t)r;
     }
+    *arbitration_id = CAN.packetId();
     return true;
   }
   return false;

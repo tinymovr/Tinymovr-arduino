@@ -60,13 +60,13 @@ void send_cb(uint32_t arbitration_id, uint8_t *data, uint8_t data_size, bool rtr
  *  data: pointer to the data array to be received
  *  data_size: pointer to the variable that will hold the size of received data
  */
-bool recv_cb(uint32_t arbitration_id, uint8_t *data, uint8_t *data_size)
+bool recv_cb(uint32_t *arbitration_id, uint8_t *data, uint8_t *data_size)
 {
-  (void)arbitration_id;
   struct can_frame frame;
   if (mcp2515.readMessage(&frame) == MCP2515::ERROR_OK) 
   {
     memcpy(data, &frame.data, frame.can_dlc * sizeof(uint8_t));
+    *arbitration_id = frame.can_id;
     return true;
   }
   return false;
