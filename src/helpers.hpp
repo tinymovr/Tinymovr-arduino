@@ -49,6 +49,9 @@ class Node {
 
     bool recv(uint8_t cmd_id, uint8_t *data, uint8_t *data_size, uint16_t delay_us)
     {
+        uint32_t _arbitration_id;
+        uint8_t _data[8];
+        uint8_t _data_size;
         // A delay of a few 100s of us needs to be inserted
         // to ensure the response has been transmitted.
         // TODO: Better handle this using an interrupt.
@@ -57,7 +60,16 @@ class Node {
             delayMicroseconds(delay_us);
         }
         const uint8_t arb_id = this->get_arbitration_id(cmd_id);
-        return this->recv_cb(arb_id, data, data_size);
+        while (this->recv_cb(&_arbitration_id, _data, &_data_size))
+        {
+            if (_arbitration_id == arb_id)
+            {
+                memcpy(data, _data, _data_size);
+                *data_size = _data_size;
+                return true;
+            }
+        }
+        return false;
     }
 };
 
