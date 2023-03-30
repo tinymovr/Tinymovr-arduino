@@ -30,7 +30,7 @@ enum recv_result {
 };
 
 typedef void (*send_callback)(uint32_t arbitration_id, uint8_t *data, uint8_t dlc, bool rtr);
-typedef recv_result (*recv_callback)(uint32_t arbitration_id, uint8_t *data, uint8_t *dlc);
+typedef recv_result (*recv_callback)(uint32_t *arbitration_id, uint8_t *data, uint8_t *dlc);
 typedef void (*delay_us_callback)(uint32_t us);
 
 class Node {
