@@ -20,7 +20,13 @@
 #include "Arduino.h"
 #endif
 
-#define EP_BITS (6)
+#define CAN_EP_SIZE 12
+#define CAN_EP_MASK ((1 << CAN_EP_SIZE) - 1)
+#define CAN_SEQ_SIZE 9
+#define CAN_SEQ_MASK (((1 << CAN_SEQ_SIZE) - 1) << CAN_EP_SIZE)
+#define CAN_DEV_SIZE 8
+#define CAN_DEV_MASK (((1 << CAN_DEV_SIZE) - 1) << (CAN_EP_SIZE + CAN_SEQ_SIZE))
+
 #define RECV_DELAY_US (160.0f)
 
 typedef void (*send_callback)(uint32_t arbitration_id, uint8_t *data, uint8_t dlc, bool rtr);
@@ -40,8 +46,8 @@ class Node {
     delay_us_callback delay_us_cb;
     uint8_t _data[8];
     uint8_t _dlc;
-    uint8_t get_arbitration_id(uint8_t cmd_id) {
-        return this->can_node_id << EP_BITS | cmd_id;
+    uint32_t get_arbitration_id(uint32_t cmd_id) {
+        return this->can_node_id << (CAN_DEV_SIZE + CAN_SEQ_SIZE) | cmd_id;
     }
     void send(uint8_t cmd_id, uint8_t *data, uint8_t data_size, bool rtr)
     {
@@ -61,7 +67,7 @@ class Node {
         {
            this->delay_us_cb(delay_us);
         }
-        const uint8_t arb_id = this->get_arbitration_id(cmd_id);
+        const uint32_t arb_id = this->get_arbitration_id(cmd_id);
         while (this->recv_cb(&_arbitration_id, _data, &_data_size))
         {
             if (_arbitration_id == arb_id)
