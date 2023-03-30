@@ -66,6 +66,18 @@ bool recv_cb(uint32_t *arbitration_id, uint8_t *data, uint8_t *data_size)
   }
   return false;
 }
+
+/*
+ * Function:  delay_us_cb 
+ * --------------------
+ *  Is called to perform a delay
+ *
+ *  us: the microseconds to wait for
+ */
+void delay_us_cb(uint32_t us)
+{
+  delayMicroseconds(us);
+}
 // ---------------------------------------------------------------
 
 // ---------------------------------------------------------------
@@ -73,7 +85,7 @@ bool recv_cb(uint32_t *arbitration_id, uint8_t *data, uint8_t *data_size)
 // ADAPT BELOW TO YOUR PROGRAM LOGIC
 
 // The Tinymovr object
-Tinymovr tinymovr(1, &send_cb, &recv_cb);
+Tinymovr tinymovr(1, &send_cb, &recv_cb, &delay_us_cb);
 
 /*
  * Function:  setup 
