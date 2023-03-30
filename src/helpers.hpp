@@ -23,19 +23,27 @@
 #define EP_BITS (6)
 #define RECV_DELAY_US (160.0f)
 
+enum recv_result {
+    RECV_OK = 0,
+    RECV_ERROR_ARB_ID = (1 << 0), 
+    RECV_ERROR_TIMEOUT = (1 << 1)
+};
+
 typedef void (*send_callback)(uint32_t arbitration_id, uint8_t *data, uint8_t dlc, bool rtr);
-typedef bool (*recv_callback)(uint32_t *arbitration_id, uint8_t *data, uint8_t *dlc);
+typedef recv_result (*recv_callback)(uint32_t arbitration_id, uint8_t *data, uint8_t *dlc);
+typedef void (*delay_us_callback)(uint32_t us);
 
 class Node {
     public:
 
-    Node(uint8_t _can_node_id, send_callback _send_cb, recv_callback _recv_cb):
-        can_node_id(_can_node_id), send_cb(_send_cb), recv_cb(_recv_cb) {}
+    Node(uint8_t _can_node_id, send_callback _send_cb, recv_callback _recv_cb, _delay_us_cb):
+        can_node_id(_can_node_id), send_cb(_send_cb), recv_cb(_recv_cb), delay_us_cb(_delay_us_cb) {}
 
     protected:
     uint8_t can_node_id;
     send_callback send_cb;
     recv_callback recv_cb;
+    delay_us_callback delay_us_cb;
     uint8_t _data[8];
     uint8_t _dlc;
     uint8_t get_arbitration_id(uint8_t cmd_id) {
@@ -57,7 +65,7 @@ class Node {
         // TODO: Better handle this using an interrupt.
         if (delay_us > 0)
         {
-            delayMicroseconds(delay_us);
+           this->delay_us_cb(delay_us);
         }
         const uint8_t arb_id = this->get_arbitration_id(cmd_id);
         while (this->recv_cb(&_arbitration_id, _data, &_data_size))
@@ -92,7 +100,20 @@ inline size_t write_le<uint8_t>(uint8_t value, uint8_t* buffer) {
 }
 
 template<>
+inline size_t write_le<int8_t>(int8_t value, uint8_t* buffer) {
+    buffer[0] = value;
+    return 1;
+}
+
+template<>
 inline size_t write_le<uint16_t>(uint16_t value, uint8_t* buffer) {
+    buffer[0] = (value >> 0) & 0xff;
+    buffer[1] = (value >> 8) & 0xff;
+    return 2;
+}
+
+template<>
+inline size_t write_le<int16_t>(int16_t value, uint8_t* buffer) {
     buffer[0] = (value >> 0) & 0xff;
     buffer[1] = (value >> 8) & 0xff;
     return 2;
@@ -150,7 +171,20 @@ inline size_t read_le<uint8_t>(uint8_t* value, const uint8_t* buffer) {
 }
 
 template<>
+inline size_t read_le<int8_t>(int8_t* value, const uint8_t* buffer) {
+    *value = buffer[0];
+    return 1;
+}
+
+template<>
 inline size_t read_le<uint16_t>(uint16_t* value, const uint8_t* buffer) {
+    *value = (static_cast<uint16_t>(buffer[0]) << 0) |
+             (static_cast<uint16_t>(buffer[1]) << 8);
+    return 2;
+}
+
+template<>
+inline size_t read_le<int16_t>(int16_t* value, const uint8_t* buffer) {
     *value = (static_cast<uint16_t>(buffer[0]) << 0) |
              (static_cast<uint16_t>(buffer[1]) << 8);
     return 2;
