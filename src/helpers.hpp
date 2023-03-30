@@ -23,14 +23,8 @@
 #define EP_BITS (6)
 #define RECV_DELAY_US (160.0f)
 
-enum recv_result {
-    RECV_OK = 0,
-    RECV_ERROR_ARB_ID = (1 << 0), 
-    RECV_ERROR_TIMEOUT = (1 << 1)
-};
-
 typedef void (*send_callback)(uint32_t arbitration_id, uint8_t *data, uint8_t dlc, bool rtr);
-typedef recv_result (*recv_callback)(uint32_t *arbitration_id, uint8_t *data, uint8_t *dlc);
+typedef bool (*recv_callback)(uint32_t *arbitration_id, uint8_t *data, uint8_t *dlc);
 typedef void (*delay_us_callback)(uint32_t us);
 
 class Node {
