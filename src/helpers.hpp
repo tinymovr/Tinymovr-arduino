@@ -36,7 +36,7 @@ typedef void (*delay_us_callback)(uint32_t us);
 class Node {
     public:
 
-    Node(uint8_t _can_node_id, send_callback _send_cb, recv_callback _recv_cb, _delay_us_cb):
+    Node(uint8_t _can_node_id, send_callback _send_cb, recv_callback _recv_cb, delay_us_callback _delay_us_cb):
         can_node_id(_can_node_id), send_cb(_send_cb), recv_cb(_recv_cb), delay_us_cb(_delay_us_cb) {}
 
     protected:
