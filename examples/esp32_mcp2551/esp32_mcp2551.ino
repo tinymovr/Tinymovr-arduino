@@ -97,6 +97,8 @@ void setup()
   Serial.begin(115200);
   CAN.setPins(12, 13);
 
+  CAN.filterExtended(0x0, 0b111100000000);
+
   // start the CAN bus at 1Mbps
   if (!CAN.begin(1000E3)) {
     Serial.println("Starting CAN failed!");
