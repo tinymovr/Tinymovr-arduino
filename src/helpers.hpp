@@ -20,11 +20,11 @@
 #include "Arduino.h"
 #endif
 
-#define CAN_EP_SIZE 12
+#define CAN_EP_SIZE (12)
 #define CAN_EP_MASK ((1 << CAN_EP_SIZE) - 1)
-#define CAN_SEQ_SIZE 9
+#define CAN_SEQ_SIZE (9)
 #define CAN_SEQ_MASK (((1 << CAN_SEQ_SIZE) - 1) << CAN_EP_SIZE)
-#define CAN_DEV_SIZE 8
+#define CAN_DEV_SIZE (8)
 #define CAN_DEV_MASK (((1 << CAN_DEV_SIZE) - 1) << (CAN_EP_SIZE + CAN_SEQ_SIZE))
 
 #define RECV_DELAY_US (160.0f)
@@ -46,8 +46,9 @@ class Node {
     delay_us_callback delay_us_cb;
     uint8_t _data[8];
     uint8_t _dlc;
-    uint32_t get_arbitration_id(uint32_t cmd_id) {
-        return this->can_node_id << (CAN_DEV_SIZE + CAN_SEQ_SIZE) | cmd_id;
+    uint32_t get_arbitration_id(uint32_t cmd_id)
+    {
+        return ((this->can_node_id << (CAN_EP_SIZE + CAN_SEQ_SIZE)) & CAN_DEV_MASK) | (cmd_id & CAN_EP_MASK);
     }
     void send(uint8_t cmd_id, uint8_t *data, uint8_t data_size, bool rtr)
     {
