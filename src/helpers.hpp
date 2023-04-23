@@ -52,7 +52,7 @@ class Node {
     }
     void send(uint8_t cmd_id, uint8_t *data, uint8_t data_size, bool rtr)
     {
-        const uint8_t arb_id = this->get_arbitration_id(cmd_id);
+        const uint32_t arb_id = this->get_arbitration_id(cmd_id);
         this->send_cb(arb_id, data, data_size, rtr);
     }
 
