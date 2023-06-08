@@ -50,21 +50,33 @@ void send_cb(uint32_t arbitration_id, uint8_t *data, uint8_t data_size, bool rtr
  *  data: pointer to the data array to be received
  *  data_size: pointer to the variable that will hold the size of received data
  */
-bool recv_cb(uint32_t arbitration_id, uint8_t *data, uint8_t *data_size)
+bool recv_cb(uint32_t *arbitration_id, uint8_t *data, uint8_t *data_size)
 {
   (void)arbitration_id;
-  //int packetSize = CAN.parsePacket();
-  int availableBytes = CAN.available();
-  *data_size = availableBytes;
-  if (availableBytes) {
-    for (int i = 0; i < availableBytes; i++) {
+  int packetSize = CAN.parsePacket();
+  *data_size = packetSize;
+  if (packetSize) {
+    for (int i = 0; i < packetSize; i++) {
       int r = CAN.read();
       if (r == -1) return false;
       data[i] = (uint8_t)r;
     }
+    *arbitration_id = CAN.packetId();
     return true;
   }
   return false;
+}
+
+/*
+ * Function:  delay_us_cb 
+ * --------------------
+ *  Is called to perform a delay
+ *
+ *  us: the microseconds to wait for
+ */
+void delay_us_cb(uint32_t us)
+{
+  delayMicroseconds(us);
 }
 // ---------------------------------------------------------------
 
@@ -73,7 +85,7 @@ bool recv_cb(uint32_t arbitration_id, uint8_t *data, uint8_t *data_size)
 // ADAPT BELOW TO YOUR PROGRAM LOGIC
 
 // The Tinymovr object
-Tinymovr tinymovr(1, &send_cb, &recv_cb);
+Tinymovr tinymovr(1, &send_cb, &recv_cb, &delay_us_cb, 100);
 
 /*
  * Function:  setup 
@@ -84,6 +96,11 @@ void setup()
 {
   Serial.begin(115200);
   CAN.setPins(12, 13);
+
+  // NOTE: You NEED to enable filtering using this pattern,
+  // otherwise the library will not function correctly,
+  // especially with a lot of Tinymovr units on the bus
+  CAN.filterExtended(0x0, 0b111100000000);
 
   // start the CAN bus at 1Mbps
   if (!CAN.begin(1000E3)) {

@@ -12,7 +12,7 @@ float Motor_::get_R(void)
 {
     float value = 0;
     this->send(43, this->_data, 0, true);
-    if (this->recv(43, this->_data, &(this->_dlc), RECV_DELAY_US)) 
+    if (this->recv(43, this->_data, &(this->_dlc), this->delay_us_value)) 
     {
         read_le(&value, this->_data);
     }
@@ -29,7 +29,7 @@ float Motor_::get_L(void)
 {
     float value = 0;
     this->send(44, this->_data, 0, true);
-    if (this->recv(44, this->_data, &(this->_dlc), RECV_DELAY_US)) 
+    if (this->recv(44, this->_data, &(this->_dlc), this->delay_us_value)) 
     {
         read_le(&value, this->_data);
     }
@@ -46,7 +46,7 @@ uint8_t Motor_::get_pole_pairs(void)
 {
     uint8_t value = 0;
     this->send(45, this->_data, 0, true);
-    if (this->recv(45, this->_data, &(this->_dlc), RECV_DELAY_US)) 
+    if (this->recv(45, this->_data, &(this->_dlc), this->delay_us_value)) 
     {
         read_le(&value, this->_data);
     }
@@ -63,7 +63,7 @@ uint8_t Motor_::get_type(void)
 {
     uint8_t value = 0;
     this->send(46, this->_data, 0, true);
-    if (this->recv(46, this->_data, &(this->_dlc), RECV_DELAY_US)) 
+    if (this->recv(46, this->_data, &(this->_dlc), this->delay_us_value)) 
     {
         read_le(&value, this->_data);
     }
@@ -80,7 +80,7 @@ float Motor_::get_offset(void)
 {
     float value = 0;
     this->send(47, this->_data, 0, true);
-    if (this->recv(47, this->_data, &(this->_dlc), RECV_DELAY_US)) 
+    if (this->recv(47, this->_data, &(this->_dlc), this->delay_us_value)) 
     {
         read_le(&value, this->_data);
     }
@@ -97,7 +97,7 @@ int8_t Motor_::get_direction(void)
 {
     int8_t value = 0;
     this->send(48, this->_data, 0, true);
-    if (this->recv(48, this->_data, &(this->_dlc), RECV_DELAY_US)) 
+    if (this->recv(48, this->_data, &(this->_dlc), this->delay_us_value)) 
     {
         read_le(&value, this->_data);
     }
@@ -114,7 +114,7 @@ bool Motor_::get_calibrated(void)
 {
     bool value = 0;
     this->send(49, this->_data, 0, true);
-    if (this->recv(49, this->_data, &(this->_dlc), RECV_DELAY_US)) 
+    if (this->recv(49, this->_data, &(this->_dlc), this->delay_us_value)) 
     {
         read_le(&value, this->_data);
     }
@@ -125,7 +125,7 @@ float Motor_::get_I_cal(void)
 {
     float value = 0;
     this->send(50, this->_data, 0, true);
-    if (this->recv(50, this->_data, &(this->_dlc), RECV_DELAY_US)) 
+    if (this->recv(50, this->_data, &(this->_dlc), this->delay_us_value)) 
     {
         read_le(&value, this->_data);
     }
@@ -142,7 +142,7 @@ uint8_t Motor_::get_errors(void)
 {
     uint8_t value = 0;
     this->send(51, this->_data, 0, true);
-    if (this->recv(51, this->_data, &(this->_dlc), RECV_DELAY_US)) 
+    if (this->recv(51, this->_data, &(this->_dlc), this->delay_us_value)) 
     {
         read_le(&value, this->_data);
     }

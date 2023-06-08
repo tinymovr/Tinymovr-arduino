@@ -12,7 +12,7 @@ float Encoder_::get_position_estimate(void)
 {
     float value = 0;
     this->send(52, this->_data, 0, true);
-    if (this->recv(52, this->_data, &(this->_dlc), RECV_DELAY_US)) 
+    if (this->recv(52, this->_data, &(this->_dlc), this->delay_us_value)) 
     {
         read_le(&value, this->_data);
     }
@@ -23,7 +23,7 @@ float Encoder_::get_velocity_estimate(void)
 {
     float value = 0;
     this->send(53, this->_data, 0, true);
-    if (this->recv(53, this->_data, &(this->_dlc), RECV_DELAY_US)) 
+    if (this->recv(53, this->_data, &(this->_dlc), this->delay_us_value)) 
     {
         read_le(&value, this->_data);
     }
@@ -34,7 +34,7 @@ uint8_t Encoder_::get_type(void)
 {
     uint8_t value = 0;
     this->send(54, this->_data, 0, true);
-    if (this->recv(54, this->_data, &(this->_dlc), RECV_DELAY_US)) 
+    if (this->recv(54, this->_data, &(this->_dlc), this->delay_us_value)) 
     {
         read_le(&value, this->_data);
     }
@@ -51,7 +51,7 @@ float Encoder_::get_bandwidth(void)
 {
     float value = 0;
     this->send(55, this->_data, 0, true);
-    if (this->recv(55, this->_data, &(this->_dlc), RECV_DELAY_US)) 
+    if (this->recv(55, this->_data, &(this->_dlc), this->delay_us_value)) 
     {
         read_le(&value, this->_data);
     }
@@ -68,7 +68,7 @@ bool Encoder_::get_calibrated(void)
 {
     bool value = 0;
     this->send(56, this->_data, 0, true);
-    if (this->recv(56, this->_data, &(this->_dlc), RECV_DELAY_US)) 
+    if (this->recv(56, this->_data, &(this->_dlc), this->delay_us_value)) 
     {
         read_le(&value, this->_data);
     }
@@ -79,7 +79,7 @@ uint8_t Encoder_::get_errors(void)
 {
     uint8_t value = 0;
     this->send(57, this->_data, 0, true);
-    if (this->recv(57, this->_data, &(this->_dlc), RECV_DELAY_US)) 
+    if (this->recv(57, this->_data, &(this->_dlc), this->delay_us_value)) 
     {
         read_le(&value, this->_data);
     }
