@@ -90,7 +90,7 @@ void delay_us_cb(uint32_t us)
 // ADAPT BELOW TO YOUR PROGRAM LOGIC
 
 // The Tinymovr object
-Tinymovr tinymovr(1, &send_cb, &recv_cb, &delay_us_cb);
+Tinymovr tinymovr(1, &send_cb, &recv_cb, &delay_us_cb, 100);
 
 /*
  * Function:  setup 
