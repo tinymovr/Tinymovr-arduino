@@ -97,6 +97,9 @@ void setup()
   Serial.begin(115200);
   CAN.setPins(12, 13);
 
+  // NOTE: You NEED to enable filtering using this pattern,
+  // otherwise the library will not function correctly,
+  // especially with a lot of Tinymovr units on the bus
   CAN.filterExtended(0x0, 0b111100000000);
 
   // start the CAN bus at 1Mbps
