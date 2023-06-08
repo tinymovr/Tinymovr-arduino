@@ -10,7 +10,7 @@
 
 #include "Arduino.h"
 #include <mcp2515.h>
-#include <tinymovr.h>
+#include <tinymovr.hpp>
 
 // ---------------------------------------------------------------
 // REQUIRED CAN HARDWARE INTERFACE CODE
@@ -60,16 +60,28 @@ void send_cb(uint32_t arbitration_id, uint8_t *data, uint8_t data_size, bool rtr
  *  data: pointer to the data array to be received
  *  data_size: pointer to the variable that will hold the size of received data
  */
-bool recv_cb(uint32_t arbitration_id, uint8_t *data, uint8_t *data_size)
+bool recv_cb(uint32_t *arbitration_id, uint8_t *data, uint8_t *data_size)
 {
-  (void)arbitration_id;
   struct can_frame frame;
   if (mcp2515.readMessage(&frame) == MCP2515::ERROR_OK) 
   {
     memcpy(data, &frame.data, frame.can_dlc * sizeof(uint8_t));
+    *arbitration_id = frame.can_id;
     return true;
   }
   return false;
+}
+
+/*
+ * Function:  delay_us_cb 
+ * --------------------
+ *  Is called to perform a delay
+ *
+ *  us: the microseconds to wait for
+ */
+void delay_us_cb(uint32_t us)
+{
+  delayMicroseconds(us);
 }
 // ---------------------------------------------------------------
 
@@ -78,7 +90,7 @@ bool recv_cb(uint32_t arbitration_id, uint8_t *data, uint8_t *data_size)
 // ADAPT BELOW TO YOUR PROGRAM LOGIC
 
 // The Tinymovr object
-Tinymovr tinymovr(1, &send_cb, &recv_cb);
+Tinymovr tinymovr(1, &send_cb, &recv_cb, &delay_us_cb, 100);
 
 /*
  * Function:  setup 
@@ -90,6 +102,12 @@ void setup()
   Serial.begin(115200);
   mcp2515.reset();
   mcp2515.setBitrate(CAN_1000KBPS, MCP_8MHZ);
+
+  // NOTE: You NEED to enable filtering using this pattern,
+  // otherwise the library will not function correctly,
+  // especially with a lot of Tinymovr units on the bus
+  mcp2515.setFilter(MCP2515::RXF0, true, 0x0);
+  mcp2515.setFilterMask(MCP2515::MASK0, true, 0b111100000000);
   mcp2515.setNormalMode();
 }
 
@@ -107,17 +125,18 @@ void loop()
     if (receivedChar == 'Q')
     {
       Serial.println("Received Calibration command");
-      tinymovr.set_state(STATE_CALIBRATE, 0);
+      tinymovr.controller.set_state(1);
     }
     else if (receivedChar == 'A')
     {
       Serial.println("Received Closed Loop command");
-      tinymovr.set_state(STATE_CL_CONTROL, CTRL_POSITION);
+      tinymovr.controller.set_state(2);
+      tinymovr.controller.set_mode(2);
     }
     else if (receivedChar == 'Z')
     {
       Serial.println("Received Idle command");
-      tinymovr.set_state(STATE_IDLE, CTRL_CURRENT);
+      tinymovr.controller.set_state(0);
     }
     else if (receivedChar == 'R')
     {
@@ -127,65 +146,38 @@ void loop()
     else if (receivedChar == '<')
     {
       Serial.println("Received L turn command");
-      float pos_estimate;
-      float vel_estimate;
-      tinymovr.get_encoder_estimates(&pos_estimate, &vel_estimate);
+      float pos_estimate = tinymovr.encoder.get_position_estimate();
       Serial.println(pos_estimate);
-      tinymovr.set_pos_setpoint(pos_estimate - 8192.0f, 0, 0);
+      tinymovr.controller.position.set_setpoint(pos_estimate - 8192.0f);
     }
     else if (receivedChar == '>')
     {
       Serial.println("Received R turn command");
-      float pos_estimate;
-      float vel_estimate;
-      tinymovr.get_encoder_estimates(&pos_estimate, &vel_estimate);
+      float pos_estimate = tinymovr.encoder.get_position_estimate();
       Serial.println(pos_estimate);
-      tinymovr.set_pos_setpoint(pos_estimate + 8192.0f, 0, 0);
+      tinymovr.controller.position.set_setpoint(pos_estimate + 8192.0f);
     }
     else if (receivedChar == 'I')
     {
       // Print board information
-      uint32_t id = 0;
-      uint8_t fw_major = 0;
-      uint8_t fw_minor = 0;
-      uint8_t fw_patch = 0;
-      uint8_t temp = 0;
-      uint8_t state = 0;
-      uint8_t mode = 0;
-      tinymovr.device_info(&id, &fw_major, &fw_minor, &fw_patch, &temp);
-      tinymovr.get_state(&state, &mode);
       Serial.print("Device ID: ");
-      Serial.print(id);
-      Serial.print(", Firmware version: ");
-      Serial.print(fw_major);
-      Serial.print(".");
-      Serial.print(fw_minor);
-      Serial.print(".");
-      Serial.print(fw_patch);
+      Serial.print(tinymovr.comms.can.get_id());
       Serial.print(", Temp:");
-      Serial.print(temp);
+      Serial.print(tinymovr.get_temp());
       Serial.print(", State:");
-      Serial.print(state);
+      Serial.print(tinymovr.controller.get_state());
       Serial.print(", Mode:");
-      Serial.print(mode);
+      Serial.print(tinymovr.controller.get_mode());
       Serial.print("\n");
-
-      float pos_estimate;
-      float vel_estimate;
-      tinymovr.get_encoder_estimates(&pos_estimate, &vel_estimate);
       Serial.print("Position estimate: ");
-      Serial.print(pos_estimate);
+      Serial.print(tinymovr.encoder.get_position_estimate());
       Serial.print(", Velocity estimate: ");
-      Serial.print(vel_estimate);
+      Serial.print(tinymovr.encoder.get_velocity_estimate());
       Serial.print("\n");
-
-      float Iq_setpoint;
-      float Iq_estimate;
-      tinymovr.get_Iq_setpoint_estimate(&Iq_setpoint, &Iq_estimate);
       Serial.print("Iq estimate: ");
-      Serial.print(Iq_estimate);
+      Serial.print(tinymovr.controller.current.get_Iq_estimate());
       Serial.print(", Iq setpoint: ");
-      Serial.print(Iq_setpoint);
+      Serial.print(tinymovr.controller.current.get_Iq_setpoint());
       Serial.print("\n");
       Serial.println("---");
     }
