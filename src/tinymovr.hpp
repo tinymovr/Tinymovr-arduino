@@ -15,9 +15,10 @@
 #include <motor.hpp>
 #include <encoder.hpp>
 #include <traj_planner.hpp>
+#include <homing.hpp>
 #include <watchdog.hpp>
 
-static uint32_t avlos_proto_hash = 3273002564;
+static uint32_t avlos_proto_hash = 3667602695;
 
 enum errors_flags
 {
@@ -68,19 +69,26 @@ enum traj_planner_errors_flags
     TRAJ_PLANNER_ERRORS_VCRUISE_OVER_LIMIT = (1 << 1)
 };
 
+enum homing_warnings_flags
+{
+    HOMING_WARNINGS_NONE = 0,
+    HOMING_WARNINGS_HOMING_TIMEOUT = (1 << 0)
+};
+
 class Tinymovr : Node
 {
     public:
 
-        Tinymovr(uint8_t _can_node_id, send_callback _send_cb, recv_callback _recv_cb, delay_us_callback _delay_us_cb):
-            Node(_can_node_id, _send_cb, _recv_cb, _delay_us_cb)
-            , scheduler(_can_node_id, _send_cb, _recv_cb, _delay_us_cb)
-            , controller(_can_node_id, _send_cb, _recv_cb, _delay_us_cb)
-            , comms(_can_node_id, _send_cb, _recv_cb, _delay_us_cb)
-            , motor(_can_node_id, _send_cb, _recv_cb, _delay_us_cb)
-            , encoder(_can_node_id, _send_cb, _recv_cb, _delay_us_cb)
-            , traj_planner(_can_node_id, _send_cb, _recv_cb, _delay_us_cb)
-            , watchdog(_can_node_id, _send_cb, _recv_cb, _delay_us_cb) {};
+        Tinymovr(uint8_t _can_node_id, send_callback _send_cb, recv_callback _recv_cb, delay_us_callback _delay_us_cb, uint32_t _delay_us_value):
+            Node(_can_node_id, _send_cb, _recv_cb, _delay_us_cb, _delay_us_value)
+            , scheduler(_can_node_id, _send_cb, _recv_cb, _delay_us_cb, _delay_us_value)
+            , controller(_can_node_id, _send_cb, _recv_cb, _delay_us_cb, _delay_us_value)
+            , comms(_can_node_id, _send_cb, _recv_cb, _delay_us_cb, _delay_us_value)
+            , motor(_can_node_id, _send_cb, _recv_cb, _delay_us_cb, _delay_us_value)
+            , encoder(_can_node_id, _send_cb, _recv_cb, _delay_us_cb, _delay_us_value)
+            , traj_planner(_can_node_id, _send_cb, _recv_cb, _delay_us_cb, _delay_us_value)
+            , homing(_can_node_id, _send_cb, _recv_cb, _delay_us_cb, _delay_us_value)
+            , watchdog(_can_node_id, _send_cb, _recv_cb, _delay_us_cb, _delay_us_value) {};
         uint32_t get_protocol_hash(void);
         uint32_t get_uid(void);
         float get_Vbus(void);
@@ -98,6 +106,7 @@ class Tinymovr : Node
         Motor_ motor;
         Encoder_ encoder;
         Traj_planner_ traj_planner;
+        Homing_ homing;
         Watchdog_ watchdog;
 
 };

@@ -12,7 +12,7 @@ float Velocity_::get_setpoint(void)
 {
     float value = 0;
     this->send(20, this->_data, 0, true);
-    if (this->recv(20, this->_data, &(this->_dlc), RECV_DELAY_US)) 
+    if (this->recv(20, this->_data, &(this->_dlc), this->delay_us_value)) 
     {
         read_le(&value, this->_data);
     }
@@ -29,7 +29,7 @@ float Velocity_::get_limit(void)
 {
     float value = 0;
     this->send(21, this->_data, 0, true);
-    if (this->recv(21, this->_data, &(this->_dlc), RECV_DELAY_US)) 
+    if (this->recv(21, this->_data, &(this->_dlc), this->delay_us_value)) 
     {
         read_le(&value, this->_data);
     }
@@ -46,7 +46,7 @@ float Velocity_::get_p_gain(void)
 {
     float value = 0;
     this->send(22, this->_data, 0, true);
-    if (this->recv(22, this->_data, &(this->_dlc), RECV_DELAY_US)) 
+    if (this->recv(22, this->_data, &(this->_dlc), this->delay_us_value)) 
     {
         read_le(&value, this->_data);
     }
@@ -63,7 +63,7 @@ float Velocity_::get_i_gain(void)
 {
     float value = 0;
     this->send(23, this->_data, 0, true);
-    if (this->recv(23, this->_data, &(this->_dlc), RECV_DELAY_US)) 
+    if (this->recv(23, this->_data, &(this->_dlc), this->delay_us_value)) 
     {
         read_le(&value, this->_data);
     }
@@ -80,7 +80,7 @@ float Velocity_::get_deadband(void)
 {
     float value = 0;
     this->send(24, this->_data, 0, true);
-    if (this->recv(24, this->_data, &(this->_dlc), RECV_DELAY_US)) 
+    if (this->recv(24, this->_data, &(this->_dlc), this->delay_us_value)) 
     {
         read_le(&value, this->_data);
     }
@@ -97,7 +97,7 @@ float Velocity_::get_increment(void)
 {
     float value = 0;
     this->send(25, this->_data, 0, true);
-    if (this->recv(25, this->_data, &(this->_dlc), RECV_DELAY_US)) 
+    if (this->recv(25, this->_data, &(this->_dlc), this->delay_us_value)) 
     {
         read_le(&value, this->_data);
     }

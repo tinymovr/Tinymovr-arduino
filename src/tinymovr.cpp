@@ -10,7 +10,7 @@ uint32_t Tinymovr::get_protocol_hash(void)
 {
     uint32_t value = 0;
     this->send(0, this->_data, 0, true);
-    if (this->recv(0, this->_data, &(this->_dlc), RECV_DELAY_US)) 
+    if (this->recv(0, this->_data, &(this->_dlc), this->delay_us_value)) 
     {
         read_le(&value, this->_data);
     }
@@ -20,7 +20,7 @@ uint32_t Tinymovr::get_uid(void)
 {
     uint32_t value = 0;
     this->send(1, this->_data, 0, true);
-    if (this->recv(1, this->_data, &(this->_dlc), RECV_DELAY_US)) 
+    if (this->recv(1, this->_data, &(this->_dlc), this->delay_us_value)) 
     {
         read_le(&value, this->_data);
     }
@@ -30,7 +30,7 @@ float Tinymovr::get_Vbus(void)
 {
     float value = 0;
     this->send(2, this->_data, 0, true);
-    if (this->recv(2, this->_data, &(this->_dlc), RECV_DELAY_US)) 
+    if (this->recv(2, this->_data, &(this->_dlc), this->delay_us_value)) 
     {
         read_le(&value, this->_data);
     }
@@ -40,7 +40,7 @@ float Tinymovr::get_Ibus(void)
 {
     float value = 0;
     this->send(3, this->_data, 0, true);
-    if (this->recv(3, this->_data, &(this->_dlc), RECV_DELAY_US)) 
+    if (this->recv(3, this->_data, &(this->_dlc), this->delay_us_value)) 
     {
         read_le(&value, this->_data);
     }
@@ -50,7 +50,7 @@ float Tinymovr::get_power(void)
 {
     float value = 0;
     this->send(4, this->_data, 0, true);
-    if (this->recv(4, this->_data, &(this->_dlc), RECV_DELAY_US)) 
+    if (this->recv(4, this->_data, &(this->_dlc), this->delay_us_value)) 
     {
         read_le(&value, this->_data);
     }
@@ -60,7 +60,7 @@ float Tinymovr::get_temp(void)
 {
     float value = 0;
     this->send(5, this->_data, 0, true);
-    if (this->recv(5, this->_data, &(this->_dlc), RECV_DELAY_US)) 
+    if (this->recv(5, this->_data, &(this->_dlc), this->delay_us_value)) 
     {
         read_le(&value, this->_data);
     }
@@ -70,7 +70,7 @@ bool Tinymovr::get_calibrated(void)
 {
     bool value = 0;
     this->send(6, this->_data, 0, true);
-    if (this->recv(6, this->_data, &(this->_dlc), RECV_DELAY_US)) 
+    if (this->recv(6, this->_data, &(this->_dlc), this->delay_us_value)) 
     {
         read_le(&value, this->_data);
     }
@@ -80,7 +80,7 @@ uint8_t Tinymovr::get_errors(void)
 {
     uint8_t value = 0;
     this->send(7, this->_data, 0, true);
-    if (this->recv(7, this->_data, &(this->_dlc), RECV_DELAY_US)) 
+    if (this->recv(7, this->_data, &(this->_dlc), this->delay_us_value)) 
     {
         read_le(&value, this->_data);
     }

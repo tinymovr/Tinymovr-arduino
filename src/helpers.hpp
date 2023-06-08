@@ -27,8 +27,6 @@
 #define CAN_DEV_SIZE (8)
 #define CAN_DEV_MASK (((1 << CAN_DEV_SIZE) - 1) << (CAN_EP_SIZE + CAN_SEQ_SIZE))
 
-#define RECV_DELAY_US (160.0f)
-
 typedef void (*send_callback)(uint32_t arbitration_id, uint8_t *data, uint8_t dlc, bool rtr);
 typedef bool (*recv_callback)(uint32_t *arbitration_id, uint8_t *data, uint8_t *dlc);
 typedef void (*delay_us_callback)(uint32_t us);
@@ -36,14 +34,15 @@ typedef void (*delay_us_callback)(uint32_t us);
 class Node {
     public:
 
-    Node(uint8_t _can_node_id, send_callback _send_cb, recv_callback _recv_cb, delay_us_callback _delay_us_cb):
-        can_node_id(_can_node_id), send_cb(_send_cb), recv_cb(_recv_cb), delay_us_cb(_delay_us_cb) {}
+    Node(uint8_t _can_node_id, send_callback _send_cb, recv_callback _recv_cb, delay_us_callback _delay_us_cb, uint32_t _delay_us_value):
+        can_node_id(_can_node_id), send_cb(_send_cb), recv_cb(_recv_cb), delay_us_cb(_delay_us_cb), delay_us_value(_delay_us_value) {}
 
     protected:
     uint8_t can_node_id;
     send_callback send_cb;
     recv_callback recv_cb;
     delay_us_callback delay_us_cb;
+    uint32_t delay_us_value;
     uint8_t _data[8];
     uint8_t _dlc;
     uint32_t get_arbitration_id(uint32_t cmd_id)

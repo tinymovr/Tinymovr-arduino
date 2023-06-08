@@ -12,7 +12,7 @@ float Position_::get_setpoint(void)
 {
     float value = 0;
     this->send(18, this->_data, 0, true);
-    if (this->recv(18, this->_data, &(this->_dlc), RECV_DELAY_US)) 
+    if (this->recv(18, this->_data, &(this->_dlc), this->delay_us_value)) 
     {
         read_le(&value, this->_data);
     }
@@ -29,7 +29,7 @@ float Position_::get_p_gain(void)
 {
     float value = 0;
     this->send(19, this->_data, 0, true);
-    if (this->recv(19, this->_data, &(this->_dlc), RECV_DELAY_US)) 
+    if (this->recv(19, this->_data, &(this->_dlc), this->delay_us_value)) 
     {
         read_le(&value, this->_data);
     }
