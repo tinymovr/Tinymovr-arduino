@@ -48,10 +48,14 @@ float Tinymovr::get_Ibus(void)
 }
 float Tinymovr::get_power(void)
 {
+    this->send(get_Iq_set_est_ep_id, this->_data, 0, true);
+    if (this->recv(get_Iq_set_est_ep_id, this->_data, &(this->_dlc), RECV_DELAY_US)) 
     float value = 0;
     this->send(4, this->_data, 0, true);
     if (this->recv(4, this->_data, &(this->_dlc), this->delay_us_value)) 
     {
+        read_le(Iq_set, this->_data);
+        read_le(Iq_est, this->_data + 4);
         read_le(&value, this->_data);
     }
     return value;
