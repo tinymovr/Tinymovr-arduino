@@ -36,8 +36,11 @@
  */
 void send_cb(uint32_t arbitration_id, uint8_t *data, uint8_t data_size, bool rtr)
 {
-  CAN.beginPacket(arbitration_id, data_size, rtr);
-  CAN.write(data, data_size);
+  CAN.beginExtendedPacket(arbitration_id, data_size, rtr);
+  for (int i=0; i<data_size; i++)
+  {
+    CAN.write(data[i]);
+  }
   CAN.endPacket();
 }
 
@@ -52,10 +55,9 @@ void send_cb(uint32_t arbitration_id, uint8_t *data, uint8_t data_size, bool rtr
  */
 bool recv_cb(uint32_t *arbitration_id, uint8_t *data, uint8_t *data_size)
 {
-  (void)arbitration_id;
   int packetSize = CAN.parsePacket();
-  *data_size = packetSize;
-  if (packetSize) {
+  if (packetSize > 0) {
+    *data_size = packetSize;
     for (int i = 0; i < packetSize; i++) {
       int r = CAN.read();
       if (r == -1) return false;
@@ -97,14 +99,18 @@ void setup()
   Serial.begin(115200);
   CAN.setPins(12, 13);
 
-  // NOTE: You NEED to enable filtering using this pattern,
-  // otherwise the library will not function correctly,
-  // especially with a lot of Tinymovr units on the bus
-  CAN.filterExtended(0x0, 0b111100000000);
-
   // start the CAN bus at 1Mbps
   if (!CAN.begin(1000E3)) {
     Serial.println("Starting CAN failed!");
+    while (1);
+  }
+
+  // NOTE: You NEED to enable filtering using this pattern,
+  // otherwise the library will not function correctly,
+  // especially with a lot of Tinymovr units on the bus
+  if (!CAN.filterExtended(0x0, 0x700))
+  {
+    Serial.println("Setting CAN filters failed!");
     while (1);
   }
 }
