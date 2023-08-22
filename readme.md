@@ -20,19 +20,23 @@ The library is hardware-agnostic so you can use any CAN 2.0-capable adapter. The
 
 ## Using the library
 
-The library is object oriented and the main Tinymovr object is what you use to establish communication with the board. Since mose endpoints return multiple data, the functions require references to variables to store the data. For instance, to retrieve encoder estimates:
+The library is object oriented and the main Tinymovr object is what you use to establish communication with the board. Endpoints that are read only implement  `get_{endpoint_name}` style getters. Endpoints that are writeable implement both `get_{endpoint_name}` and `set_{endpoint_name}`. 
 
-    float pos_estimate;
-    float vel_estimate;
-    tinymovr.get_encoder_estimates(&pos_estimate, &vel_estimate);
+    float pos_estimate = tinymovr.encoder.get_position_estimate();
+    float vel_estimate = tinymovr.encoder.get_velocity_estimate();
+    tinymovr.controller.position.set_setpoint(10000);
+
+Functions are called with their name and required parameters.
+
+    tinymovr.traj_planner.move_to(10000);
 
 ## Hardware Support
 
 Even though the library itself is hardware-agnostic (by means of dependency injection), the examples we provide depend on the [CAN Adafruit Fork](https://github.com/adafruit/arduino-CAN) library for low-level hardware access and configuration. Why this library? Because it is the only one offering robust extended frame hardware filtering configuration. There are a ton of CAN libraries for Arduino and embedded in general, but most have only the basic functionality working and fully tested, not the advanced features that Tinymovr requires. 
  
-However, there are some edge cases that the CAN Adafruit Fork library is unable to support. The most common one is MCP2515 breakout boards (the blue ones) with 8MHz crystal, of which there are plenty to be found from Chinese sources. The CAN Adafruit Fork library has the crystal frequency harcoded to 16MHz, which breaks the CAN timing configuration. Unfortunately, Adafruit has archived the library repository so it is impossible to raise an issue on this matter. 
+However, not all hardware is compatible with the CAN Adafruit Fork library. Namely, the MCP2515/MCP2551 breakout boards (the blue ones) with 8MHz crystal, of which there are plenty to be found from Chinese sources, are incompatible. The CAN Adafruit Fork library has the crystal frequency harcoded to 16MHz, which breaks the CAN timing configuration. Unfortunately, Adafruit has archived the library repository so it is impossible to raise an issue on this matter. 
 
-As we cannot afford to maintain another low-level CAN library fork, this situation will most probably remain as is for the foreseeable future. Our advice would be to switch to something like a MKR CAN BUS Shield, which is fully supported. Alternatively, you may try to fork the CAN Adafruit Fork library, or implement your own `send_cb`,  `recv_cb` and `delay_us_cb` routines. In both cases, you can ask for community support in our [Discord server](https://discord.gg/vNvmpfthug), but these options are not officially supported.
+As we cannot afford to maintain another low-level CAN library fork, this situation will most probably remain as is for the foreseeable future. Our advice would be to switch hardware to something like a MKR CAN BUS Shield, which is fully supported (and gives you a more compact setup). Alternatively, you may try to fork the CAN Adafruit Fork library, or implement your own `send_cb`, `recv_cb` and `delay_us_cb` routines. In both cases, you can ask for community support in our [Discord server](https://discord.gg/vNvmpfthug), but these options are not officially supported.
 
 ## License
 
