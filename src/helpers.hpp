@@ -49,13 +49,13 @@ class Node {
     {
         return ((this->can_node_id << (CAN_EP_SIZE + CAN_SEQ_SIZE)) & CAN_DEV_MASK) | (cmd_id & CAN_EP_MASK);
     }
-    void send(uint8_t cmd_id, uint8_t *data, uint8_t data_size, bool rtr)
+    void send(uint32_t cmd_id, uint8_t *data, uint8_t data_size, bool rtr)
     {
         const uint32_t arb_id = this->get_arbitration_id(cmd_id);
         this->send_cb(arb_id, data, data_size, rtr);
     }
 
-    bool recv(uint8_t cmd_id, uint8_t *data, uint8_t *data_size, uint16_t delay_us)
+    bool recv(uint32_t cmd_id, uint8_t *data, uint8_t *data_size, uint16_t delay_us)
     {
         uint32_t _arbitration_id;
         uint8_t _data[8];
@@ -223,8 +223,6 @@ inline size_t read_le<uint64_t>(uint64_t* value, const uint8_t* buffer) {
 
 template<>
 inline size_t read_le<float>(float* value, const uint8_t* buffer) {
-    //static_assert(CHAR_BIT * sizeof(float) == 32, "32 bit floating point expected");
-    //static_assert(std::numeric_limits<float>::is_iec559, "IEEE 754 floating point expected");
     return read_le(reinterpret_cast<uint32_t*>(value), buffer);
 }
 
