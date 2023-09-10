@@ -18,13 +18,18 @@
 #include <homing.hpp>
 #include <watchdog.hpp>
 
-static uint32_t avlos_proto_hash = 3667602695;
+static uint32_t avlos_proto_hash = 4118115615;
 
 enum errors_flags
 {
     ERRORS_NONE = 0,
     ERRORS_UNDERVOLTAGE = (1 << 0), 
-    ERRORS_DRIVER_FAULT = (1 << 1)
+    ERRORS_DRIVER_FAULT = (1 << 1), 
+    ERRORS_CHARGE_PUMP_FAULT_STAT = (1 << 2), 
+    ERRORS_CHARGE_PUMP_FAULT = (1 << 3), 
+    ERRORS_DRV10_DISABLE = (1 << 4), 
+    ERRORS_DRV32_DISABLE = (1 << 5), 
+    ERRORS_DRV54_DISABLE = (1 << 6)
 };
 
 enum scheduler_errors_flags
@@ -75,6 +80,18 @@ enum homing_warnings_flags
     HOMING_WARNINGS_HOMING_TIMEOUT = (1 << 0)
 };
 
+enum motor_type_options
+{
+    MOTOR_TYPE_HIGH_CURRENT = 0, 
+    MOTOR_TYPE_GIMBAL = 1
+};
+
+enum encoder_type_options
+{
+    ENCODER_TYPE_INTERNAL = 0, 
+    ENCODER_TYPE_HALL = 1
+};
+
 class Tinymovr : Node
 {
     public:
@@ -91,6 +108,8 @@ class Tinymovr : Node
             , watchdog(_can_node_id, _send_cb, _recv_cb, _delay_us_cb, _delay_us_value) {};
         uint32_t get_protocol_hash(void);
         uint32_t get_uid(void);
+        void get_fw_version(char out_value[]);
+        uint32_t get_hw_revision(void);
         float get_Vbus(void);
         float get_Ibus(void);
         float get_power(void);
@@ -100,6 +119,7 @@ class Tinymovr : Node
         void save_config();
         void erase_config();
         void reset();
+        void enter_dfu();
         Scheduler_ scheduler;
         Controller_ controller;
         Comms_ comms;

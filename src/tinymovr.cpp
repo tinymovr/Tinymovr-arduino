@@ -26,19 +26,18 @@ uint32_t Tinymovr::get_uid(void)
     }
     return value;
 }
-float Tinymovr::get_Vbus(void)
+void Tinymovr::get_fw_version(char out_value[])
 {
-    float value = 0;
     this->send(2, this->_data, 0, true);
+    this->_dlc = 0;
     if (this->recv(2, this->_data, &(this->_dlc), this->delay_us_value)) 
     {
-        read_le(&value, this->_data);
+        memcpy(out_value, this->_data, this->_dlc);
     }
-    return value;
 }
-float Tinymovr::get_Ibus(void)
+uint32_t Tinymovr::get_hw_revision(void)
 {
-    float value = 0;
+    uint32_t value = 0;
     this->send(3, this->_data, 0, true);
     if (this->recv(3, this->_data, &(this->_dlc), this->delay_us_value)) 
     {
@@ -46,7 +45,7 @@ float Tinymovr::get_Ibus(void)
     }
     return value;
 }
-float Tinymovr::get_power(void)
+float Tinymovr::get_Vbus(void)
 {
     float value = 0;
     this->send(4, this->_data, 0, true);
@@ -56,7 +55,7 @@ float Tinymovr::get_power(void)
     }
     return value;
 }
-float Tinymovr::get_temp(void)
+float Tinymovr::get_Ibus(void)
 {
     float value = 0;
     this->send(5, this->_data, 0, true);
@@ -66,11 +65,31 @@ float Tinymovr::get_temp(void)
     }
     return value;
 }
+float Tinymovr::get_power(void)
+{
+    float value = 0;
+    this->send(6, this->_data, 0, true);
+    if (this->recv(6, this->_data, &(this->_dlc), this->delay_us_value)) 
+    {
+        read_le(&value, this->_data);
+    }
+    return value;
+}
+float Tinymovr::get_temp(void)
+{
+    float value = 0;
+    this->send(7, this->_data, 0, true);
+    if (this->recv(7, this->_data, &(this->_dlc), this->delay_us_value)) 
+    {
+        read_le(&value, this->_data);
+    }
+    return value;
+}
 bool Tinymovr::get_calibrated(void)
 {
     bool value = 0;
-    this->send(6, this->_data, 0, true);
-    if (this->recv(6, this->_data, &(this->_dlc), this->delay_us_value)) 
+    this->send(8, this->_data, 0, true);
+    if (this->recv(8, this->_data, &(this->_dlc), this->delay_us_value)) 
     {
         read_le(&value, this->_data);
     }
@@ -79,8 +98,8 @@ bool Tinymovr::get_calibrated(void)
 uint8_t Tinymovr::get_errors(void)
 {
     uint8_t value = 0;
-    this->send(7, this->_data, 0, true);
-    if (this->recv(7, this->_data, &(this->_dlc), this->delay_us_value)) 
+    this->send(9, this->_data, 0, true);
+    if (this->recv(9, this->_data, &(this->_dlc), this->delay_us_value)) 
     {
         read_le(&value, this->_data);
     }
@@ -89,16 +108,21 @@ uint8_t Tinymovr::get_errors(void)
 
 void Tinymovr::save_config()
 {
-    this->send(8, this->_data, 0, true);
+    this->send(10, this->_data, 0, true);
 }
 
 void Tinymovr::erase_config()
 {
-    this->send(9, this->_data, 0, true);
+    this->send(11, this->_data, 0, true);
 }
 
 void Tinymovr::reset()
 {
-    this->send(10, this->_data, 0, true);
+    this->send(12, this->_data, 0, true);
+}
+
+void Tinymovr::enter_dfu()
+{
+    this->send(13, this->_data, 0, true);
 }
 
