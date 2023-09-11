@@ -11,7 +11,7 @@ The Tinymovr-Arduino library offers an easy interface for controlling Tinymovr t
 
 ## Installing the library
 
-[Download the zip](https://github.com/tinymovr/Tinymovr-arduino/archive/refs/heads/main.zip). Either use the "Install from ZIP file" option in Arduino, or extract the zip contents to `{arduino folder}/libraries/Tinymovr-arduino`. An example file is included with the library.
+[Download the release .zip](https://github.com/tinymovr/Tinymovr-arduino/releases) that corresponds to your Tinymovr firmware version. Either use the "Install from ZIP file" option in Arduino, or extract the zip contents to `{arduino folder}/libraries/Tinymovr-arduino`. An example file is included with the library.
 
 The library is hardware-agnostic so you can use any CAN 2.0-capable adapter. The library uses dependency injection to talk to hardware. There are three functions, `send_cb`,  `recv_cb` and `delay_us_cb` that need to be implemented. These are passed to the Tinymovr object during initialization, along with the desired board CAN id:
 
