@@ -113,6 +113,15 @@ void setup()
     Serial.println("Setting CAN filters failed!");
     while (1);
   }
+
+  // As a final step check that the hash returned by the node
+  // is the same as the hash stored by the Tinymovr library.
+  // This is crucial to prevent potential mismatches in commands.
+  if (tinymovr.get_protocol_hash() != avlos_proto_hash)
+  {
+    Serial.println("Wrong device spec!");
+    while (1);
+  }
 }
 
 /*
