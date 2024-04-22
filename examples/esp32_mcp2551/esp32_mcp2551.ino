@@ -159,14 +159,14 @@ void loop()
     else if (receivedChar == '<')
     {
       Serial.println("Received L turn command");
-      float pos_estimate = tinymovr.encoder.get_position_estimate();
+      float pos_estimate = tinymovr.sensors.user_frame.get_position_estimate();
       Serial.println(pos_estimate);
       tinymovr.controller.position.set_setpoint(pos_estimate - 8192.0f);
     }
     else if (receivedChar == '>')
     {
       Serial.println("Received R turn command");
-      float pos_estimate = tinymovr.encoder.get_position_estimate();
+      float pos_estimate = tinymovr.sensors.user_frame.get_position_estimate();
       Serial.println(pos_estimate);
       tinymovr.controller.position.set_setpoint(pos_estimate + 8192.0f);
     }
@@ -183,9 +183,9 @@ void loop()
       Serial.print(tinymovr.controller.get_mode());
       Serial.print("\n");
       Serial.print("Position estimate: ");
-      Serial.print(tinymovr.encoder.get_position_estimate());
+      Serial.print(tinymovr.sensors.user_frame.get_position_estimate());
       Serial.print(", Velocity estimate: ");
-      Serial.print(tinymovr.encoder.get_velocity_estimate());
+      Serial.print(tinymovr.sensors.user_frame.get_velocity_estimate());
       Serial.print("\n");
       Serial.print("Iq estimate: ");
       Serial.print(tinymovr.controller.current.get_Iq_estimate());

@@ -22,8 +22,8 @@ The library is hardware-agnostic so you can use any CAN 2.0-capable adapter. The
 
 The library is object oriented and the main Tinymovr object is what you use to establish communication with the board. Endpoints that are read only implement  `get_{endpoint_name}` style getters. Endpoints that are writeable implement both `get_{endpoint_name}` and `set_{endpoint_name}`. 
 
-    float pos_estimate = tinymovr.encoder.get_position_estimate();
-    float vel_estimate = tinymovr.encoder.get_velocity_estimate();
+    float pos_estimate = tinymovr.sensors.user_frame.get_position_estimate();
+    float vel_estimate = tinymovr.sensors.user_frame.get_velocity_estimate();
     tinymovr.controller.position.set_setpoint(10000);
 
 Functions are called with their name and required parameters.
