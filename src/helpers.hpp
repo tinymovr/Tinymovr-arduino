@@ -22,11 +22,11 @@
 #endif
 
 #define CAN_EP_SIZE (12)
-#define CAN_EP_MASK ((1 << CAN_EP_SIZE) - 1)
+#define CAN_EP_MASK ((1UL << CAN_EP_SIZE) - 1)
 #define CAN_SEQ_SIZE (9)
-#define CAN_SEQ_MASK (((1 << CAN_SEQ_SIZE) - 1) << CAN_EP_SIZE)
+#define CAN_SEQ_MASK (((1UL << CAN_SEQ_SIZE) - 1) << CAN_EP_SIZE)
 #define CAN_DEV_SIZE (8)
-#define CAN_DEV_MASK (((1 << CAN_DEV_SIZE) - 1) << (CAN_EP_SIZE + CAN_SEQ_SIZE))
+#define CAN_DEV_MASK (((1UL << CAN_DEV_SIZE) - 1) << (CAN_EP_SIZE + CAN_SEQ_SIZE))
 
 typedef void (*send_callback)(uint32_t arbitration_id, uint8_t *data, uint8_t dlc, bool rtr);
 typedef bool (*recv_callback)(uint32_t *arbitration_id, uint8_t *data, uint8_t *dlc);
