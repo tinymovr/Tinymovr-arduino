@@ -48,7 +48,7 @@ class Node {
     uint8_t _dlc;
     uint32_t get_arbitration_id(uint32_t cmd_id)
     {
-        return ((this->can_node_id << (CAN_EP_SIZE + CAN_SEQ_SIZE)) & CAN_DEV_MASK) | (cmd_id & CAN_EP_MASK);
+        return ((((uint32_t)this->can_node_id) << (CAN_EP_SIZE + CAN_SEQ_SIZE)) & CAN_DEV_MASK) | (cmd_id & CAN_EP_MASK);
     }
     void send(uint32_t cmd_id, uint8_t *data, uint8_t data_size, bool rtr)
     {
