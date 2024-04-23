@@ -94,7 +94,7 @@ Tinymovr tinymovr(1, &send_cb, &recv_cb, &delay_us_cb, 100);
 void setup()
 {
   Serial.begin(115200);
-  CAN.setPins(12, 13);
+  while (!Serial);
 
   // Most MCP2515 breakouts have a 8MHz crystal, this needs
   // to be specified here
@@ -118,10 +118,15 @@ void setup()
   // As a final step check that the hash returned by the node
   // is the same as the hash stored by the Tinymovr library.
   // This is crucial to prevent potential mismatches in commands.
-  if (tinymovr.get_protocol_hash() != avlos_proto_hash)
+  uint32_t got_hash = tinymovr.get_protocol_hash();
+  if (got_hash != avlos_proto_hash)
   {
     Serial.println("Wrong device spec!");
-    while (1);
+    Serial.print("Got: ");
+    Serial.println(got_hash);
+    Serial.print("Need: ");
+    Serial.println(avlos_proto_hash);
+    while(1);
   }
 }
 
