@@ -1,15 +1,12 @@
 /*
  * This is a minimal example of the Tinymovr-Arduino library
- * functionality, using the ESP32 with MCP2551 to connect to
- * CAN bus. The example allows sending a few basic commands,
+ * functionality, using the Arduino Uno with MCP2515 to connect
+ * to CAN bus. The example allows sending a few basic commands,
  * and supports reading back information.
  * 
  * For CAN endpoint reference check out:
  * https://tinymovr.readthedocs.io/en/latest/api/guide.html#api-reference
  */
-
-
-/* ESP32 initialization code kindly contributed by Viorel Stirbu */
 
 
 #include "Arduino.h"
@@ -97,7 +94,11 @@ Tinymovr tinymovr(1, &send_cb, &recv_cb, &delay_us_cb, 100);
 void setup()
 {
   Serial.begin(115200);
-  CAN.setPins(12, 13);
+  while (!Serial);
+
+  // Most MCP2515 breakouts have a 8MHz crystal, this needs
+  // to be specified here
+  CAN.setClockFrequency(8e6);
 
   // start the CAN bus at 1Mbps
   if (!CAN.begin(1000E3)) {
@@ -117,10 +118,15 @@ void setup()
   // As a final step check that the hash returned by the node
   // is the same as the hash stored by the Tinymovr library.
   // This is crucial to prevent potential mismatches in commands.
-  if (tinymovr.get_protocol_hash() != avlos_proto_hash)
+  uint32_t got_hash = tinymovr.get_protocol_hash();
+  if (got_hash != avlos_proto_hash)
   {
     Serial.println("Wrong device spec!");
-    while (1);
+    Serial.print("Got: ");
+    Serial.println(got_hash);
+    Serial.print("Need: ");
+    Serial.println(avlos_proto_hash);
+    while(1);
   }
 }
 
