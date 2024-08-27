@@ -18,7 +18,7 @@
 #include <homing.hpp>
 #include <watchdog.hpp>
 
-static uint32_t avlos_proto_hash = 3704894695;
+static uint32_t avlos_proto_hash = 641680925;
 
 enum errors_flags
 {
@@ -54,7 +54,8 @@ enum controller_warnings_flags
 enum controller_errors_flags
 {
     CONTROLLER_ERRORS_NONE = 0,
-    CONTROLLER_ERRORS_CURRENT_LIMIT_EXCEEDED = (1 << 0)
+    CONTROLLER_ERRORS_CURRENT_LIMIT_EXCEEDED = (1 << 0), 
+    CONTROLLER_ERRORS_PRE_CL_I_SD_EXCEEDED = (1 << 1)
 };
 
 enum motor_errors_flags
@@ -62,7 +63,9 @@ enum motor_errors_flags
     MOTOR_ERRORS_NONE = 0,
     MOTOR_ERRORS_PHASE_RESISTANCE_OUT_OF_RANGE = (1 << 0), 
     MOTOR_ERRORS_PHASE_INDUCTANCE_OUT_OF_RANGE = (1 << 1), 
-    MOTOR_ERRORS_INVALID_POLE_PAIRS = (1 << 2)
+    MOTOR_ERRORS_POLE_PAIRS_CALCULATION_DID_NOT_CONVERGE = (1 << 2), 
+    MOTOR_ERRORS_POLE_PAIRS_OUT_OF_RANGE = (1 << 3), 
+    MOTOR_ERRORS_ABNORMAL_CALIBRATION_VOLTAGE = (1 << 4)
 };
 
 enum sensors_setup_onboard_errors_flags
